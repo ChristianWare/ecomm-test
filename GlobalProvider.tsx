@@ -5,7 +5,11 @@ import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 
-export function Globalprovider({ children }: { children: React.ReactNode }) {
+interface GlobalProviderProps {
+  children: React.ReactNode
+}
+
+export function Globalprovider({ children }: GlobalProviderProps) {
   return (
     <>
       <Toaster />
@@ -15,4 +19,3 @@ export function Globalprovider({ children }: { children: React.ReactNode }) {
     </>
   );
 }
-0

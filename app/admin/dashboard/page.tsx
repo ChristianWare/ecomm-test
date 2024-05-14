@@ -6,11 +6,9 @@ export const metadata = {
 };
 
 const DashboardPage = async () => {
-
-
   return (
     <>
-      <Dashboard />
+      <h1>dashboard page</h1>
     </>
   );
 };
