@@ -1,0 +1,27 @@
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-in;
+}
+
+.modalContent {
+  background-color: var(--white);
+  padding: 3rem;
+  border-radius: 20px;
+  max-width: 700px;
+  position: relative;
+  transition: all 0.3s ease-in;
+}
+
+.children {
+  margin-top: 1rem;
+}

@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  background-color: var(--purple2);
+  padding: 2rem;
+  border-radius: 10px;
+  margin-bottom: 5rem;
+}
+
+.btn,
+.active {
+  background-color: var(--white);
+  padding: 1.5rem;
+  border-radius: 5px;
+  line-height: 100%;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  background-color: var(--purple);
+  color: var(--white);
+}
+
+.active {
+  background-color: var(--purple);
+  color: var(--white);
+}
+
+@media screen and (max-width: 900px) {
+  /* .container {
+    flex-direction: row;
+  } */
+
+  .btn,
+  .active {
+    flex: 1;
+  }
+
+  .container {
+    flex-wrap: wrap;
+    /* width: fit-content; */
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .container {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: 100%;
+  }
+}

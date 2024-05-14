@@ -1,0 +1,183 @@
+.container {
+  position: relative;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.left,
+.right {
+  flex: 1;
+  width: 100%;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.copy {
+  opacity: 0.7;
+  font-weight: 400;
+  width: 70%;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
+  font-size: 1.6rem;
+}
+
+.circleContainer {
+  margin-left: 8rem;
+}
+
+.checkContainer {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.featureText {
+  font-weight: 600;
+  color: var(--purple);
+}
+
+.icon {
+  border: 3px solid var(--purple);
+  border-radius: 50%;
+  color: black;
+}
+
+.form {
+  width: 100%;
+}
+
+.namesContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+  width: 100%;
+}
+
+.labelInputBox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 3rem;
+  flex: 1;
+  width: 100%;
+}
+
+.labelInputBox label {
+  font-weight: 600;
+  color: var(--purple);
+  margin-bottom: 0.5rem;
+}
+
+.labelInputBox input,
+.labelInputBox textarea {
+  border-radius: 10px;
+  border: none;
+  height: 55px;
+  width: 100%;
+  background-color: var(--purple2);
+  color: var(--black2);
+  padding: 2rem;
+  padding-left: 2rem;
+  width: 100%;
+  font-weight: 400;
+  inset: none;
+}
+
+.fieldErrors {
+  background-color: red;
+}
+
+.labelInputBox textarea {
+  height: 130px;
+  resize: vertical;
+}
+
+.required {
+  color: red !important;
+}
+
+.btnBtnContainer {
+  margin-top: 3rem;
+}
+
+.btnContainer {
+  display: grid;
+  width: 100%;
+}
+
+.error {
+  color: red;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+.success {
+  color: var(--purple);
+}
+
+@media screen and (max-width: 1100px) {
+  .left {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .circleContainer {
+    margin-left: 0rem;
+  }
+
+  .copy {
+    width: 100%;
+    text-align: center;
+  }
+
+  .rtContainer {
+    margin-top: 5rem;
+  }
+
+  .bottom {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .form {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .container::after {
+    width: 100px;
+    height: 100px;
+    background-color: var(--accent2);
+    z-index: -1;
+  }
+
+  .container::before {
+    width: 100px;
+    height: 100px;
+    background-color: var(--accent1);
+  }
+
+  .namesContainer {
+    flex-direction: column;
+    gap: 0rem;
+  }
+
+  .btnBtnContainer {
+    display: grid;
+    width: 100%;
+  }
+}

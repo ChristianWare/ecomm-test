@@ -1,0 +1,91 @@
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+.container::after {
+  position: absolute;
+  content: "";
+  bottom: -5px;
+  right: -5px;
+  background-color: var(--purple2);
+  width: fit-content;
+  height: 90%;
+  width: 95%;
+  border-radius: 10px;
+  z-index: -1;
+}
+
+.btn {
+  font-family: var(--tuskerGrotesk);
+  text-transform: uppercase;
+  font-size: 2rem;
+  letter-spacing: 1px;
+  text-align: center;
+  white-space: nowrap;
+  border-radius: 10px;
+  user-select: none;
+  transition: all 0.1s ease-in;
+  display: inline-block;
+  padding: 15px 30px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  cursor: pointer;
+}
+
+.btn:active {
+  transform: translate(10px, 10px);
+}
+
+.primary {
+  color: var(--black);
+  background-color: var(--white);
+  border: 2px solid var(--purple);
+}
+
+.primaryii {
+  color: var(--white);
+  background-color: var(--black);
+  border: 2px solid var(--black);
+}
+
+.secondary {
+  color: var(--white);
+  background-color: var(--purple);
+  border: 2px solid var(--white);
+}
+
+.tertiary {
+  color: var(--white);
+  background-color: var(--purple);
+  border: 2px solid var(--purple);
+}
+
+.navBtn {
+  padding: 10px 15px;
+  font-weight: 600;
+  color: var(--white);
+  background-color: var(--black);
+  border: 2px solid var(--black);
+  font-size: 1.4rem;
+}
+
+.navBtnii {
+  padding: 10px 15px;
+  font-weight: 600;
+  color: var(--white);
+  background-color: var(--purple);
+  border: 2px solid var(--white);
+}
+
+@media screen and (max-width: 768px) {
+  .btn {
+    font-size: 2rem;
+  }
+}

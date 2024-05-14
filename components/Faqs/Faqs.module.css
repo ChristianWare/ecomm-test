@@ -1,0 +1,131 @@
+.container {
+  margin-bottom: 8rem;
+  position: relative;
+  background-color: var(--purple2);
+}
+
+.content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.heading {
+  margin-bottom: 2rem;
+}
+
+.copy {
+  line-height: 150%;
+  font-weight: 700;
+  width: 90%;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.qaContainer {
+  padding: 3rem;
+  background-color: var(--border3);
+  border: 1px solid var(--gray);
+  border-radius: 20px;
+  width: 100%;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease-in;
+}
+
+.qaContainer:hover,
+.active {
+  background-color: var(--purple);
+  color: var(--white);
+}
+
+.answerContainer {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.2s ease-in-out;
+}
+
+.answerContainer.show {
+  max-height: 350px;
+}
+
+.headingArrowContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.icon {
+  color: var(--cream);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.iconFlip {
+  transform: rotate(135deg);
+  color: var(--cream);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.question {
+  font-family: var(--helveticaBold);
+  font-size: 2rem;
+  color: var(--cream);
+  text-decoration: none;
+  line-height: 120%;
+  hyphens: auto;
+  width: 90%;
+}
+
+.answer {
+  color: var(--white);
+  opacity: 0.7;
+  margin-top: 1.5rem;
+  hyphens: auto;
+  width: 90%;
+  font-family: var(--raleway);
+}
+
+.btnContainer {
+  display: grid;
+  width: fit-content;
+  margin-left: auto;
+  margin-top: 3rem;
+}
+
+@media screen and (max-width: 820px) {
+  .top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .content {
+    flex-direction: column;
+  }
+
+  .copy {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .container {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  .bottom {
+    gap: 2rem;
+  }
+}

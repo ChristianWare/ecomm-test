@@ -1,0 +1,107 @@
+.heading {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 3rem;
+  color: var(--purple);
+  text-decoration: underline;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 2rem;
+  width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10rem;
+}
+
+.newImageGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
+}
+
+.lableInputBox {
+  display: block;
+  width: 100%;
+}
+
+.lableInputBox label {
+  display: block;
+  font-weight: 700;
+  color: var(--purple);
+  margin-bottom: 0.5rem;
+}
+
+.lableInputBox input,
+.lableInputBox textarea,
+.lableInputBox select {
+  border: 1px solid var(--gray);
+  padding: 1.3rem;
+  border-radius: 10px;
+  width: 100%;
+  line-height: 100%;
+  appearance: none;
+}
+
+.closeBtn {
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+.imgGridContainer {
+  margin-top: 5rem;
+}
+
+.imgGridContainer span,
+.msg {
+  font-weight: 700;
+  color: var(--purple);
+}
+
+.msg {
+  display: block;
+  margin-top: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.imageGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
+  margin-top: 0.5rem;
+}
+
+.imgContainer {
+  position: relative;
+  width: 100%;
+  height: 200px;
+}
+
+.img {
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.btnContainer {
+  width: 100%;
+  margin-top: 2rem;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 100%;
+    padding: 3rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .imageGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

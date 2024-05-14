@@ -1,0 +1,50 @@
+.container {
+  /* background-color: var(--purple); */
+}
+
+.content {
+  position: relative;
+}
+
+.heading {
+  color: var(--purple);
+  text-align: center;
+  font-size: 7rem;
+  text-transform: uppercase;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  hyphens: auto;
+}
+
+.span {
+  font-family: var(--tuskerGrotesk);
+  font-size: 7rem;
+  letter-spacing: 5px;
+  color: var(--white);
+  text-shadow: 1.5px 1.5px 0 #7065f0, -1.5px -1.5px 0 #7065f0,
+    1.5px -1.5px 0 #7065f0, -1.5px 1.5px 0 #7065f0;
+  hyphens: auto;
+  word-break: break-all;
+}
+
+@media screen and (max-width: 968px) {
+  .heading {
+    width: 80%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .heading {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .heading {
+    font-size: 6.5rem;
+  }
+}

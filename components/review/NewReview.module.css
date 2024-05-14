@@ -1,0 +1,76 @@
+.heading {
+  text-align: center;
+  font-size: 3rem;
+  color: var(--purple);
+  text-decoration: underline;
+}
+
+.btnContainer {
+  display: block;
+  width: fit-content;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 2rem;
+  width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.lableInputBox {
+  display: block;
+  width: 100%;
+}
+
+.lableInputBox label {
+  display: block;
+  font-weight: 700;
+  color: var(--purple);
+  margin-bottom: 0.5rem;
+}
+
+.lableInputBox textarea {
+  border: 1px solid var(--gray);
+  padding: 1.3rem;
+  border-radius: 10px;
+  width: 100%;
+  height: 200px;
+  line-height: 100%;
+}
+
+.stars {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.btnContainer {
+  width: fit-content;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 400px;
+  }
+
+  .btnContainer {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .container {
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    width: 100%;
+  }
+}

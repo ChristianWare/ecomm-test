@@ -1,0 +1,75 @@
+.bottom {
+  margin-top: 5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
+  background: rgb(161, 155, 246);
+  background: -moz-linear-gradient(
+    180deg,
+    rgba(161, 155, 246, 1) 0%,
+    rgba(112, 101, 240, 1) 100%
+  );
+  background: -webkit-linear-gradient(
+    180deg,
+    rgba(161, 155, 246, 1) 0%,
+    rgba(112, 101, 240, 1) 100%
+  );
+  background: linear-gradient(
+    180deg,
+    rgba(161, 155, 246, 1) 0%,
+    rgba(112, 101, 240, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#a19bf6",endColorstr="#7065f0",GradientType=1);
+  padding: 15rem 3rem;
+  border-radius: 20px;
+}
+
+.box {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 3rem;
+}
+
+.option {
+  color: var(--white);
+}
+
+.desc {
+  color: var(--white);
+  opacity: 0.7;
+}
+
+.userName {
+  font-family: var(--tuskerGrotesk);
+}
+
+.btnContainer {
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 2rem;
+}
+
+@media screen and (max-width: 968px) {
+  .bottom {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .heading,
+  .btnContainer {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .bottom {
+    grid-template-columns: repeat(1, 1fr);
+    padding: 3rem;
+  }
+
+  .btnContainer {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

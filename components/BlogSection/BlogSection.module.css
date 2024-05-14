@@ -1,0 +1,24 @@
+.heading {
+  text-align: center;
+  width: 100%;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+}
+
+.bottom {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
+}
+
+@media screen and (max-width: 968px) {
+  .bottom {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 668px) {
+  .bottom {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

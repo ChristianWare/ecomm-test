@@ -1,0 +1,283 @@
+.container {
+  background-color: var(--purple);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: -10rem;
+}
+
+.topTop {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 5rem;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  background-color: var(--purple2);
+  padding: 3rem;
+  border-radius: 20px;
+  height: fit-content;
+}
+
+.logo {
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: var(--purple);
+}
+
+.span {
+  font-size: 2rem;
+  font-family: var(--helveticaBold);
+  text-transform: uppercase;
+  color: var(--purple);
+  position: relative;
+  top: 15px;
+}
+
+.desc {
+  font-family: var(--helveticaBold);
+  margin-top: 2rem;
+  font-size: 1.4rem;
+  opacity: 1;
+}
+
+.copy {
+  color: var(--white);
+  hyphens: auto;
+  font-size: 1.4rem;
+  margin-top: 2rem;
+  height: fit-content;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 2;
+  height: 100%;
+}
+
+.middleDesktop {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 9rem;
+  grid-row-gap: 5rem;
+  grid-auto-flow: dense;
+  height: 100%;
+}
+
+.middleMobile {
+  display: none;
+}
+
+.sectionContainer {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.heading {
+  color: var(--white);
+  font-family: var(--helveticaBold);
+  font-weight: 900;
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.footerItemContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.footerItem {
+  color: var(--purple2);
+  font-size: 1.4rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.footerItem:hover {
+  text-decoration: underline;
+}
+
+.answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0, 1, 0, 1);
+}
+
+.answer.show {
+  height: auto;
+  max-height: 9999px;
+  transition: all 2s ease-in-out;
+}
+
+.bottom,
+.bottomDesktop {
+  border-top: 1px solid rgba(214, 214, 214, 0.5);
+  margin-top: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bottom {
+  display: none;
+}
+
+.bottomRight .copy {
+  padding-left: 2rem;
+  color: var(--white);
+}
+
+.target {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 968px) {
+  .top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .logo {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1rem;
+  }
+
+  .desc {
+    width: 90%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1rem;
+  }
+
+  .topTop {
+    grid-template-columns: 1fr;
+    grid-gap: 5rem;
+  }
+
+  .desc {
+    margin-top: 1rem;
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .input {
+    width: 100%;
+  }
+
+  .middleDesktop {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .sectionContainer {
+    padding-left: 0;
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .topTop {
+    gap: 0rem;
+  }
+
+  .logo {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1rem;
+  }
+
+  .desc {
+    width: 90%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1rem;
+  }
+
+  .desc,
+  .footerItem,
+  .heading {
+    font-size: 1.8rem;
+  }
+
+  .middleDesktop {
+    display: none;
+  }
+
+  .middleMobile {
+    display: block;
+    margin-top: 3rem;
+  }
+
+  .headingContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    border-bottom: none;
+  }
+
+  .arrow {
+    color: var(--white);
+    font-size: 2rem;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .arrowFlip {
+    transform: rotate(180deg);
+    transition: all 0.3s ease-in-out;
+  }
+
+  .sectionContainer {
+    padding: 2rem 0rem;
+    border-bottom: 1px solid rgba(214, 214, 214, 0.5);
+  }
+
+  .heading {
+    font-size: 1.6rem;
+    margin-bottom: 0rem;
+  }
+
+  .footerItem {
+    margin-top: 1rem;
+    font-size: 1.8rem;
+  }
+
+  .bottom {
+    border-top: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    place-items: center;
+    margin-top: 2rem;
+  }
+
+  .bottomDesktop {
+    display: none;
+  }
+
+  .bottomLeft {
+    order: 2;
+  }
+
+  .copy {
+    margin-top: 0rem;
+    text-align: center;
+  }
+}

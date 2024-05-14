@@ -1,0 +1,97 @@
+.top {
+  background-color: var(--purple2);
+  margin-bottom: 5rem;
+  padding: 3rem;
+  border-radius: 20px;
+}
+
+.h1Heading {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.heading {
+  margin-bottom: 2rem;
+  font-size: 3rem;
+  color: var(--purple);
+  text-decoration: underline;
+}
+
+.headingii {
+  margin-bottom: 2rem;
+  font-size: 3rem;
+  color: var(--purple);
+  word-break: break-all;
+}
+
+.link {
+  display: block;
+  margin-top: 3rem;
+  padding: 2rem;
+  border-radius: 10px;
+  border: 1px solid var(--purple);
+  font-weight: 700;
+  width: fit-content;
+}
+
+.link i {
+  margin-right: 1rem;
+}
+
+.infoBox {
+  background-color: var(--purple2);
+  margin-bottom: 5rem;
+  padding: 3rem;
+  border-radius: 20px;
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 2rem;
+}
+
+.infoBox h3 {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  text-decoration: underline;
+  color: var(--purple);
+}
+
+.category {
+  font-weight: 700;
+}
+
+.bookedRooomDetails {
+  padding: 2rem 0rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  grid-gap: 2rem;
+}
+
+.imgContainer {
+  position: relative;
+  width: 100%;
+  height: 400px;
+}
+
+.img {
+  object-fit: cover;
+  border-radius: 20px;
+  border: 2px solid var(--purple2);
+}
+
+@media screen and (max-width: 768px) {
+  .btnContainer {
+    display: grid;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .imgContainer {
+    height: 300px;
+  }
+}

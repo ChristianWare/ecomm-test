@@ -1,0 +1,38 @@
+/* .imgContainer {
+  position: relative;
+  font-size: 0;
+  border-radius: 10px;
+  height: 350px;
+}
+
+.img {
+  position: absolute;
+  object-fit: cover;
+  border-radius: 10px;
+  font-size: 0;
+} */
+
+.imgContainer {
+  position: relative;
+  height: 500px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.imgContainer::after {
+  position: absolute;
+  content: "";
+  top: 10px;
+  left: 10px;
+  background-color: var(--purple);
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  z-index: -1;
+}
+
+.img {
+  object-fit: cover;
+  border: 3px solid var(--white);
+  border-radius: 20px;
+}

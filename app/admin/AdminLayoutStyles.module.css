@@ -1,0 +1,33 @@
+.heading {
+  text-align: center;
+  margin-bottom: 7rem;
+}
+
+/* .content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 5rem;
+} */
+/* 
+.left {
+  flex: 1;
+  width: 100%;
+}
+
+.right {
+  flex: 5;
+  width: 100%;
+} */
+
+@media screen and (max-width: 1000px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .left,
+  .right {
+    flex: 1;
+    width: 100%;
+  }
+}
