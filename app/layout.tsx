@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Globalprovider } from "@/GlobalProvider";
 import Nav from "@/components/Nav/Nav";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,19 @@ export default function RootLayout({
     <html lang='en'>
       <body className={inter.className}>
         <Globalprovider>
+          <Toaster
+            position='bottom-right'
+            toastOptions={{
+              className: "toastFont",
+              duration: 3000,
+              style: {
+                border: "2px solid #295f4e",
+                borderRadius: "50px",
+                textAlign: "center",
+                whiteSpace: "nowrap",
+              },
+            }}
+          />
           <Nav />
           {children}
         </Globalprovider>

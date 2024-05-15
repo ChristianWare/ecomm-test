@@ -3,7 +3,7 @@
 import styles from "./FalseButton.module.css";
 
 interface Props {
-  text: string;
+  text: any;
   btnType: string;
   onClick?: () => void;
   disabled?: any;

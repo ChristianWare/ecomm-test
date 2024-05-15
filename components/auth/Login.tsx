@@ -12,18 +12,26 @@ import ContentPadding from "../ContentPadding/ContentPadding";
 import FalseButton from "../FalseButton/FalseButton";
 import Button from "../Button/Button";
 import Visibility from "../../public/icons/visibility.svg";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+type LoginInputs = {
+  email: string;
+  password: string;
+};
 
 const Login = () => {
   const { data: session } = useSession();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const router = useRouter();
 
-  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginInputs>();
+
+  const onSubmit: SubmitHandler<LoginInputs> = async ({ email, password }) => {
     setLoading(true);
 
     const result = await signIn("credentials", {
@@ -56,7 +64,7 @@ const Login = () => {
       <LayoutWrapper>
         <ContentPadding>
           <h1 className={styles.heading}>Login</h1>
-          <form className={styles.container} onSubmit={submitHandler}>
+          <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
             {session ? (
               <>
                 <p>you are now logged in</p>
@@ -72,9 +80,18 @@ const Login = () => {
                   <input
                     type='email'
                     id='email_field'
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    {...register("email", {
+                      required: "Email is required",
+                      pattern: {
+                        value: /\S+@\S+\.\S+/,
+                        message: "Entered value does not match email format",
+                      },
+                    })}
+                    disabled={loading}
                   />
+                  {errors.email && (
+                    <span className={styles.error}>{errors.email.message}</span>
+                  )}
                 </div>
 
                 <div className={styles.lableInputBox}>
@@ -83,20 +100,28 @@ const Login = () => {
                     <input
                       type={passwordVisible ? "text" : "password"}
                       id='password_field'
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      {...register("password", {
+                        required: "Password is required",
+                      })}
+                      disabled={loading}
                     />
                     <Visibility
                       className={styles.visibilityIcon}
                       onClick={togglePasswordVisibility}
                       width={25}
                       height={25}
-                    />{" "}
+                    />
                   </div>
+                  {errors.password && (
+                    <span className={styles.error}>
+                      {errors.password.message}
+                    </span>
+                  )}
                 </div>
+
                 <div className={styles.btnContainer}>
                   <FalseButton
-                    btnType='secondary'
+                    btnType='primaryii'
                     disabled={loading}
                     text={loading ? "Loading..." : "Login"}
                   />
@@ -110,7 +135,7 @@ const Login = () => {
                 <div>
                   <span className={styles.newUser}>New User?</span>
                   <Link href='/register' className={styles.link}>
-                    Register Here{" "}
+                    Register Here
                   </Link>
                 </div>
               </>

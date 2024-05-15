@@ -10,7 +10,6 @@ import { setIsAuthenticated, setUser } from "../../redux/features/userSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { signOut, useSession } from "next-auth/react";
 import Down from "../../public/icons/down.svg";
-import toast from "react-hot-toast";
 
 function Nav() {
   const dispatch = useAppDispatch();
@@ -19,6 +18,8 @@ function Nav() {
   const { data } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenii, setIsOpenii] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const openMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -59,11 +60,12 @@ function Nav() {
   const pathname = usePathname();
   const router = useRouter();
 
-  const logoutHandler = () => {
+  const logoutHandler = async () => {
+    setLoading(true);
+    await signOut();
+    setLoading(false);
     router.push("/");
     setIsOpen(false);
-    signOut();
-    toast.success("Logged Out");
   };
 
   const navItems = [
@@ -137,7 +139,7 @@ function Nav() {
                 )}
                 <Button
                   href='/'
-                  text='Log out'
+                  text={loading ? "Logging out..." : "Log out"}
                   btnType='navBtnii'
                   onClick={logoutHandler}
                 />
@@ -243,7 +245,7 @@ function Nav() {
                 )}
                 <Button
                   href='/'
-                  text='Log out'
+                  text={loading ? "Logging out..." : "Log out"}
                   btnType='navBtnii'
                   onClick={logoutHandler}
                 />
