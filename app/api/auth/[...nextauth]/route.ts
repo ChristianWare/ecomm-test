@@ -3,8 +3,11 @@ import User, { IUser } from "../../../../backend/models/user";
 import { NextApiRequest, NextApiResponse } from "next";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcryptjs";
 import { NextRequest } from "next/server";
+import crypto from "crypto";
+
 
 type Token = {
   user: IUser;
@@ -20,7 +23,7 @@ async function auth(req: NextRequest, res: any) {
       // @ts-ignore
       CredentialsProvider({
         async authorize(credentials) {
-          dbConnect();
+          await dbConnect();
 
           const { email, password } = credentials as {
             email: string;
@@ -45,20 +48,43 @@ async function auth(req: NextRequest, res: any) {
           return user;
         },
       }),
+      GoogleProvider({
+        clientId: process.env.GOOGLE_CLIENT_ID as string,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+        async profile(profile) {
+          await dbConnect();
+
+          let user = await User.findOne({ email: profile.email });
+
+          if (!user) {
+            const randomPassword = crypto.randomBytes(16).toString("hex"); // Generate a random password
+            user = await User.create({
+              name: profile.name,
+              email: profile.email,
+              password: bcrypt.hashSync(randomPassword, 10), // Hash the random password
+              googleId: profile.sub,
+            });
+          }
+
+          return user;
+        },
+      }),
     ],
     callbacks: {
       jwt: async ({ token, user }) => {
         const jwtToken = token as Token;
 
-        user && (token.user = user);
+        if (user) {
+          jwtToken.user = user as IUser;
+        }
 
         // Update session when user is updated
         if (req.url?.includes("/api/auth/session?update")) {
           // Hit the database and return the updated user
           const updatedUser = await User.findById(jwtToken?.user?._id);
-          token.user = updatedUser;
+          jwtToken.user = updatedUser;
         }
-        return token;
+        return jwtToken;
       },
       session: async ({ session, token }) => {
         session.user = token.user as IUser;

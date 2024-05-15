@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import ContentPadding from "../../components/ContentPadding/ContentPadding";
 import LayoutWrapper from "../../components/LayoutWrapper/LayoutWrapper";
 import { useAppSelector } from "../../redux/hooks";
@@ -22,6 +23,23 @@ const options = [
 
 const AccountPage = () => {
   const { user } = useAppSelector((state) => state.auth);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (user !== undefined) {
+      setIsLoading(false);
+    }
+  }, [user]);
+
+  if (isLoading) {
+    return (
+      <LayoutWrapper>
+        <ContentPadding>
+          <h1 className={styles.heading}>Loading...</h1>
+        </ContentPadding>
+      </LayoutWrapper>
+    );
+  }
 
   return (
     <>
@@ -54,15 +72,7 @@ const AccountPage = () => {
               </div>
             </>
           ) : (
-            <>
-              <h1 className={styles.heading}>
-                You need to be logged in to access this page.
-              </h1>
-              <div className={styles.btnContainer}>
-                <Button href='/login' text='Login' btnType='secondary' />
-                <Button href='/' text='Go home' btnType='primary' />
-              </div>
-            </>
+            <h1 className={styles.heading}>Loading...</h1>
           )}
         </ContentPadding>
       </LayoutWrapper>

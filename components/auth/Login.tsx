@@ -1,7 +1,6 @@
 "use client";
 
-import { signOut, useSession } from "next-auth/react";
-import { signIn } from "next-auth/react";
+import { signOut, useSession, signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -45,8 +44,7 @@ const Login = () => {
     if (result?.error) {
       toast.error(result.error);
     } else {
-      toast.success("Logged in Successfully!");
-      router.replace("/");
+      router.replace("/account");
     }
   };
 
@@ -59,6 +57,10 @@ const Login = () => {
     setPasswordVisible((prevState) => !prevState);
   };
 
+  const handleGoogleSignIn = async () => {
+    await signIn("google", { callbackUrl: "/account" });
+  };
+
   return (
     <>
       <LayoutWrapper>
@@ -67,7 +69,7 @@ const Login = () => {
           <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
             {session ? (
               <>
-                <p>you are now logged in</p>
+                <p>You are now logged in.</p>
                 <hr />
                 <Link href='/' onClick={logoutHandler}>
                   Logout
@@ -129,6 +131,14 @@ const Login = () => {
                     btnType='primary'
                     text='Forgot password'
                     href='/password/forgot'
+                  />
+                </div>
+                <div className={styles.btnContainer}>
+                  <Button
+                    btnType='primaryii'
+                    text='Sign in with Google'
+                    onClick={handleGoogleSignIn}
+                    disabled={loading}
                   />
                 </div>
 

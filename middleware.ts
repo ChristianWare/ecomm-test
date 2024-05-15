@@ -15,6 +15,11 @@ export default withAuth(
     if (url?.startsWith("/admin") && user?.role !== "admin") {
       return NextResponse.redirect(new URL("/", req.url));
     }
+
+    // Protect account page route
+    if (url === "/account" && !user) {
+      return NextResponse.redirect(new URL("/", req.url));
+    }
   },
   {
     callbacks: {
@@ -24,5 +29,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/me/:path*", "/bookings/:path*", "/admin/:path*"],
+  matcher: ["/me/:path*", "/bookings/:path*", "/admin/:path*", "/account"],
 };

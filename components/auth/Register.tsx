@@ -1,5 +1,6 @@
 "use client";
 
+import { signIn } from "next-auth/react";
 import { useRegisterMutation } from "../../redux/api/authApi";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -44,6 +45,10 @@ const Register = () => {
       return;
     }
     await registerUser(data);
+  };
+
+  const handleGoogleSignIn = async () => {
+    await signIn("google", { callbackUrl: "/account" });
   };
 
   return (
@@ -114,6 +119,14 @@ const Register = () => {
               text={isLoading ? "Loading..." : "Register"}
             />
             <Button btnType='primary' text='Login' href='/login' />
+          </div>
+          <div className={styles.btnContainer}>
+            <Button
+              btnType='primaryii'
+              text='Register with Google'
+              onClick={handleGoogleSignIn}
+              disabled={isLoading}
+            />
           </div>
         </form>
       </ContentPadding>
