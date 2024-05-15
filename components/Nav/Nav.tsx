@@ -95,7 +95,7 @@ function Nav() {
         <div className={styles.logoContainer}>
           <Link href='/' className={styles.logo}>
             <Logo width={50} height={50} className={styles.icon} />
-            <span className={styles.span}>Elite Retreat Rentals</span>
+            <span className={styles.span}>Logo + name</span>
           </Link>
         </div>
         <ul
@@ -109,15 +109,6 @@ function Nav() {
             {user && user?.name && (
               <>
                 <div className={styles.mobileImageNameContainer}>
-                  {/* <div className={styles.imgContainer}> */}
-                  {/* <Image
-                      src={user?.avatar.url}
-                      width={40}
-                      height={40}
-                      alt={user?.name}
-                      className={styles.img}
-                    /> */}
-                  {/* </div> */}
                   {user && user?.name ? `Hi, ${user.name}:` : ""}
                 </div>
               </>
