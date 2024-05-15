@@ -65,7 +65,7 @@ function Nav() {
     await signOut();
     setLoading(false);
     router.push("/");
-    setIsOpen(false);
+    setIsOpenii(false);
   };
 
   const navItems = [
@@ -139,7 +139,7 @@ function Nav() {
                 )}
                 <Button
                   href='/'
-                  text={loading ? "Logging out..." : "Log out"}
+                  text='Log out'
                   btnType='navBtnii'
                   onClick={logoutHandler}
                 />
@@ -245,7 +245,7 @@ function Nav() {
                 )}
                 <Button
                   href='/'
-                  text={loading ? "Logging out..." : "Log out"}
+                  text='Log out'
                   btnType='navBtnii'
                   onClick={logoutHandler}
                 />
