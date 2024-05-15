@@ -5,7 +5,6 @@ import { useRegisterMutation } from "../../redux/api/authApi";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
-import ButtonLoader from "../layout/ButtonLoader";
 import styles from "./Login.module.css";
 import LayoutWrapper from "../LayoutWrapper/LayoutWrapper";
 import ContentPadding from "../ContentPadding/ContentPadding";
@@ -17,14 +16,17 @@ type RegisterInputs = {
   name: string;
   email: string;
   password: string;
+  confirmPassword: string;
 };
 
 const Register = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<RegisterInputs>();
+
   const router = useRouter();
   const [registerUser, { isLoading, error, isSuccess }] = useRegisterMutation();
 
@@ -35,7 +37,7 @@ const Register = () => {
 
     if (isSuccess) {
       router.push("/login");
-      toast.success("Account Registered. You can login now");
+      toast.success("Account Registered. Please login.");
     }
   }, [error, isSuccess, router]);
 
@@ -50,6 +52,8 @@ const Register = () => {
   const handleGoogleSignIn = async () => {
     await signIn("google", { callbackUrl: "/account" });
   };
+
+  const password = watch("password");
 
   return (
     <LayoutWrapper>
@@ -76,7 +80,6 @@ const Register = () => {
               <span className={styles.error}>{errors.name.message}</span>
             )}
           </div>
-
           <div className={styles.lableInputBox}>
             <label className='form-label' htmlFor='email_field'>
               Email
@@ -87,7 +90,7 @@ const Register = () => {
               {...register("email", {
                 required: "Email is required",
                 pattern: {
-                  value: /\S+@\S+\.\S+/,
+                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                   message: "Entered value does not match email format",
                 },
               })}
@@ -97,7 +100,6 @@ const Register = () => {
               <span className={styles.error}>{errors.email.message}</span>
             )}
           </div>
-
           <div className={styles.lableInputBox}>
             <label className='form-label' htmlFor='password_field'>
               Password
@@ -105,7 +107,15 @@ const Register = () => {
             <input
               type='password'
               id='password_field'
-              {...register("password", { required: "Password is required" })}
+              {...register("password", {
+                required: "Password is required",
+                pattern: {
+                  value:
+                    /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                  message:
+                    "Password must be at least 8 characters long, contain one uppercase letter, one number, and one special character",
+                },
+              })}
               disabled={isLoading}
             />
             {errors.password && (
@@ -113,6 +123,26 @@ const Register = () => {
             )}
           </div>
 
+          <div className={styles.lableInputBox}>
+            <label className='form-label' htmlFor='confirm_password_field'>
+              Confirm Password
+            </label>
+            <input
+              type='password'
+              id='confirm_password_field'
+              {...register("confirmPassword", {
+                required: "Confirm Password is required",
+                validate: (value) =>
+                  value === password || "Passwords do not match",
+              })}
+              disabled={isLoading}
+            />
+            {errors.confirmPassword && (
+              <span className={styles.error}>
+                {errors.confirmPassword.message}
+              </span>
+            )}
+          </div>
           <div className={styles.btnContainer}>
             <FalseButton
               btnType='primaryii'
