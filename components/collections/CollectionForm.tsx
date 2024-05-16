@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import styles from "./CollectionForm.module.css";
 import FalseButton from "../FalseButton/FalseButton";
@@ -21,6 +21,7 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
     handleSubmit,
     setValue,
     getValues,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: initialData || {
@@ -30,25 +31,41 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
     },
   });
 
+  const watchedImages = watch("image");
+
   const onSubmit = async (values: any) => {
-    try {
-      setLoading(true);
-      const url = initialData
-        ? `/api/collections/${initialData._id}`
-        : "/api/collections";
-      const res = await fetch(url, {
-        method: "POST",
-        body: JSON.stringify(values),
-      });
-      if (res.ok) {
-        setLoading(false);
-        toast.success(`Collection ${initialData ? "updated" : "created"}`);
-        router.push("/collections");
-      }
-    } catch (err) {
-      console.log("[collections_POST]", err);
-      toast.error("Something went wrong! Please try again.");
-    }
+    // try {
+    //   setLoading(true);
+    //   const url = initialData
+    //     ? `/api/collections/${initialData._id}`
+    //     : "/api/collections";
+    //   const res = await fetch(url, {
+    //     method: "POST",
+    //     body: JSON.stringify(values),
+    //   });
+    //   if (res.ok) {
+    //     setLoading(false);
+    //     toast.success(`Collection ${initialData ? "updated" : "created"}`);
+    //     router.push("/collections");
+    //   }
+    // } catch (err) {
+    //   console.log("[collections_POST]", err);
+    //   toast.error("Something went wrong! Please try again.");
+    // }
+    console.log(values);
+  };
+
+  const handleImageChange = (url: string) => {
+    const currentImages = getValues("image");
+    setValue("image", [...currentImages, url]);
+  };
+
+  const handleImageRemove = (url: string) => {
+    const currentImages = getValues("image");
+    setValue(
+      "image",
+      currentImages.filter((image: string) => image !== url)
+    );
   };
 
   return (
@@ -110,9 +127,9 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
         <div className={styles.labelInputBox}>
           <label htmlFor='image'>Image</label>
           <ImageUpload
-            value={getValues("image")}
-            onChange={(url) => setValue("image", [url])}
-            onRemove={() => setValue("image", [])}
+            value={watchedImages}
+            onChange={handleImageChange}
+            onRemove={handleImageRemove}
           />
           {/* {errors.image && (
             <p className={styles.error}>{errors.image.message}</p>
