@@ -8,7 +8,7 @@ const CollectionsPage = () => {
       <Button
         btnType='primaryii'
         href='/admin/dashboard/collections/new'
-        text='new'
+        text='+ New Collection'
       />
     </div>
   );

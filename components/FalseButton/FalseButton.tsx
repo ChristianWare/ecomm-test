@@ -5,11 +5,12 @@ import styles from "./FalseButton.module.css";
 interface Props {
   text: any;
   btnType: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   disabled?: any;
+  type?: "button" | "submit" | "reset"; // Add type prop
 }
 
-const FalseButton = ({ text, btnType, onClick, disabled }: Props) => {
+const FalseButton = ({ text, btnType, onClick, disabled, type = "button" }: Props) => {
   return (
     <div className={styles.container}>
       <button

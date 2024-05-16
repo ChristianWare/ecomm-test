@@ -5,9 +5,9 @@ import styles from "./ImageUpload.module.css";
 import Trash from "../../public/icons/trash.svg";
 
 interface ImageUploadProps {
-  value: string[];
+  value: string;
   onChange: (url: string) => void;
-  onRemove: (url: string) => void;
+  onRemove: () => void;
 }
 const ImageUpload: React.FC<ImageUploadProps> = ({
   value,
@@ -19,13 +19,21 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     onChange(newUrl);
   };
 
+  const handleUploadClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    open: () => void
+  ) => {
+    e.preventDefault(); // Prevent form submission
+    open();
+  };
+
   return (
     <div>
       <div>
-        {value.map((url, index) => (
-          <div key={index} className={styles.imgContainer}>
+        {value && (
+          <div className={styles.imgContainer}>
             <Image
-              src={url}
+              src={value}
               alt='collection'
               layout='fill'
               className={styles.img}
@@ -34,18 +42,18 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               width={35}
               height={35}
               className={styles.icon}
-              onClick={() => onRemove(url)}
+              onClick={onRemove}
             />
           </div>
-        ))}
+        )}
       </div>
       <CldUploadWidget uploadPreset='kqmegwb6' onSuccess={onSuccess}>
         {({ open }) => (
           <div className={styles.btnContainer}>
             <FalseButton
-              text={value.length ? "Change Image" : "+ Upload Image"}
+              text={value ? "Change Image" : "+ Upload Image"}
               btnType='primaryii'
-              onClick={() => open()}
+              onClick={(e) => handleUploadClick(e, open)}
             />
           </div>
         )}

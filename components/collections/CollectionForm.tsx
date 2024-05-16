@@ -7,9 +7,10 @@ import FalseButton from "../FalseButton/FalseButton";
 import ImageUpload from "../ImageUpload/ImageUpload";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import Button from "../Button/Button";
 
 interface CollectionFormProps {
-  initialData?: any | null; // Adjust this according to your data structure
+  initialData?: any | null;
 }
 
 const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
@@ -27,45 +28,42 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
     defaultValues: initialData || {
       title: "",
       description: "",
-      image: [],
+      image: "",
     },
   });
 
   const watchedImages = watch("image");
 
   const onSubmit = async (values: any) => {
-    // try {
-    //   setLoading(true);
-    //   const url = initialData
-    //     ? `/api/collections/${initialData._id}`
-    //     : "/api/collections";
-    //   const res = await fetch(url, {
-    //     method: "POST",
-    //     body: JSON.stringify(values),
-    //   });
-    //   if (res.ok) {
-    //     setLoading(false);
-    //     toast.success(`Collection ${initialData ? "updated" : "created"}`);
-    //     router.push("/collections");
-    //   }
-    // } catch (err) {
-    //   console.log("[collections_POST]", err);
-    //   toast.error("Something went wrong! Please try again.");
-    // }
-    console.log(values);
+    try {
+      setLoading(true);
+      const res = await fetch("/api/collections", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+      if (res.ok) {
+        setLoading(false);
+        toast.success("Collection Created");
+        router.push("/admin/dashboard/collections");
+      } else {
+        throw new Error("Failed to create collection");
+      }
+    } catch (err) {
+      console.log("[collections_POST]", err);
+      toast.error("Something went wrong, please try again.");
+      setLoading(false);
+    }
   };
 
   const handleImageChange = (url: string) => {
-    const currentImages = getValues("image");
-    setValue("image", [...currentImages, url]);
+    setValue("image", url);
   };
 
-  const handleImageRemove = (url: string) => {
-    const currentImages = getValues("image");
-    setValue(
-      "image",
-      currentImages.filter((image: string) => image !== url)
-    );
+  const handleImageRemove = () => {
+    setValue("image", ""); 
   };
 
   return (
@@ -125,9 +123,9 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
           )} */}
         </div>
         <div className={styles.labelInputBox}>
-          <label htmlFor='image'>Image</label>
+          {/* <label htmlFor='image'>Image</label> */}
           <ImageUpload
-            value={watchedImages}
+            value={getValues("image")}
             onChange={handleImageChange}
             onRemove={handleImageRemove}
           />
@@ -139,11 +137,12 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
           <FalseButton
             btnType='primaryii'
             text={loading ? "Submitting..." : "Submit"}
+            disabled={loading} // Disable the button while submitting
           />
-          <FalseButton
+          <Button
             btnType='primaryii'
             text='Discard'
-            onClick={() => router.push("/collections")}
+            href='/admin/dashboard/collections'
           />
         </div>
       </form>
