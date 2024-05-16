@@ -31,6 +31,7 @@ export default function RootLayout({
                 borderRadius: "50px",
                 textAlign: "center",
                 whiteSpace: "nowrap",
+                width: "fit-content",
               },
             }}
           />

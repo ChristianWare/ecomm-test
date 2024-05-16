@@ -21,7 +21,10 @@ export const POST = async (req: NextRequest) => {
     // Check if the collection already exists
     const existingCollection = await Collection.findOne({ title });
     if (existingCollection) {
-      return new NextResponse("Collection already exists", { status: 400 });
+      return new NextResponse(
+        JSON.stringify({ error: "Collection with that name already exists" }),
+        { status: 400 }
+      );
     }
 
     // Validate required fields
@@ -34,7 +37,7 @@ export const POST = async (req: NextRequest) => {
       title,
       description,
       image,
-    //   userId: token.sub, // Associate the collection with the user
+      //   userId: token.sub, // Associate the collection with the user
     });
 
     await newCollection.save();

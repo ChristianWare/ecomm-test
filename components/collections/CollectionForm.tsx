@@ -21,6 +21,7 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
     register,
     handleSubmit,
     setValue,
+    setError,
     getValues,
     watch,
     formState: { errors },
@@ -44,16 +45,29 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
         },
         body: JSON.stringify(values),
       });
+      const data = await res.json();
+      setLoading(false);
+
       if (res.ok) {
-        setLoading(false);
-        toast.success("Collection Created");
+         toast.success("Collection Created");
         router.push("/admin/dashboard/collections");
+      } else if (
+        res.status === 400 &&
+        data.error === "Collection with that name already exists"
+      ) {
+        setError("title", {
+          type: "manual",
+          message: "Collection with that name already exists",
+        });
       } else {
-        throw new Error("Failed to create collection");
+        throw new Error(data.error || "Failed to create collection");
       }
     } catch (err) {
       console.log("[collections_POST]", err);
-      toast.error("Something went wrong, please try again.");
+      setError("form", {
+        type: "manual",
+        message: "Something went wrong, please try again.",
+      });
       setLoading(false);
     }
   };
@@ -63,7 +77,14 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
   };
 
   const handleImageRemove = () => {
-    setValue("image", ""); 
+    setValue("image", "");
+  };
+
+  const renderError = (error: any) => {
+    if (typeof error === "string") {
+      return <p className={styles.error}>{error}</p>;
+    }
+    return null;
   };
 
   return (
@@ -89,13 +110,11 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
               },
               maxLength: {
                 value: 20,
-                message: "Title must be at most 20 characters",
+                message: "Title too long, must be at most 20 characters",
               },
             })}
           />
-          {/* {errors.title && (
-            <p className={styles.error}>{errors.title.message}</p>
-          )} */}
+          {renderError(errors.title?.message)}
         </div>
         <div className={styles.labelInputBox}>
           <label htmlFor='description' className={styles.label}>
@@ -118,9 +137,7 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
               },
             })}
           />
-          {/* {errors.description && (
-            <p className={styles.error}>{errors.description.message}</p>
-          )} */}
+          {renderError(errors.description?.message)}
         </div>
         <div className={styles.labelInputBox}>
           {/* <label htmlFor='image'>Image</label> */}
@@ -129,9 +146,7 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
             onChange={handleImageChange}
             onRemove={handleImageRemove}
           />
-          {/* {errors.image && (
-            <p className={styles.error}>{errors.image.message}</p>
-          )} */}
+          {renderError(errors.image?.message)}
         </div>
         <div className={styles.btnContainer}>
           <FalseButton
