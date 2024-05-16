@@ -8,16 +8,27 @@ import bcrypt from "bcryptjs";
 import { NextRequest } from "next/server";
 import crypto from "crypto";
 
-
 type Token = {
   user: IUser;
 };
-
 
 async function auth(req: NextRequest, res: any) {
   return await NextAuth(req, res, {
     session: {
       strategy: "jwt",
+      maxAge: 1 * 60 * 60, // 1 hour
+      updateAge: 24 * 60 * 60, // 24 hours
+    },
+    cookies: {
+      sessionToken: {
+        name: `__Secure-next-auth.session-token`,
+        options: {
+          httpOnly: true,
+          sameSite: "lax",
+          path: "/",
+          secure: process.env.NODE_ENV === "production", // Use secure cookies in production
+        },
+      },
     },
     providers: [
       // @ts-ignore
