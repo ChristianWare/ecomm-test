@@ -19,3 +19,14 @@
   width: fit-content;
   margin-bottom: 2rem;
 }
+
+.icon {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  border-radius: 5px;
+  background-color: red;
+  border: 1px solid var(--gray);
+  color: var(--white);
+  cursor: pointer;
+}
