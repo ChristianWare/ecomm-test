@@ -11,12 +11,14 @@ import ContentPadding from "../ContentPadding/ContentPadding";
 import FalseButton from "../FalseButton/FalseButton";
 import Button from "../Button/Button";
 import { useForm, SubmitHandler } from "react-hook-form";
+import Link from "next/link";
 
 type RegisterInputs = {
   name: string;
   email: string;
   password: string;
   confirmPassword: string;
+  agreeToPolicy: boolean;
 };
 
 const Register = () => {
@@ -60,6 +62,14 @@ const Register = () => {
       <ContentPadding>
         <h1 className={styles.heading}>New User Register</h1>
         <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
+          <div className={styles.btnContainer}>
+            <Button
+              btnType='primaryii'
+              text='Register with Google'
+              onClick={handleGoogleSignIn}
+              disabled={isLoading}
+            />
+          </div>
           <div className={styles.lableInputBox}>
             <label htmlFor='name_field' className='form-label'>
               Full Name
@@ -113,7 +123,7 @@ const Register = () => {
                   value:
                     /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
                   message:
-                    "Password must be at least 8 characters long, contain one uppercase letter, one number, and one special character",
+                    "Password must be a combination of a minimum of 8 letters, numbers, and symbols.",
                 },
               })}
               disabled={isLoading}
@@ -143,20 +153,30 @@ const Register = () => {
               </span>
             )}
           </div>
+          <div className={styles.lableInputBox}>
+            <input
+              type='checkbox'
+              id='agree_to_policy'
+              {...register("agreeToPolicy", {
+                required: "You must agree to the privacy policy",
+              })}
+              disabled={isLoading}
+            />
+            <label htmlFor='agree_to_policy' className='form-label'>
+              I agree to the <Link href='/privacy-policy'>Privacy Policy</Link>
+            </label>
+            {errors.agreeToPolicy && (
+              <span className={styles.error}>
+                {errors.agreeToPolicy.message}
+              </span>
+            )}
+          </div>
           <div className={styles.btnContainer}>
             <FalseButton
               btnType='primaryii'
               text={isLoading ? "Loading..." : "Register"}
             />
             <Button btnType='primary' text='Login' href='/login' />
-          </div>
-          <div className={styles.btnContainer}>
-            <Button
-              btnType='primaryii'
-              text='Register with Google'
-              onClick={handleGoogleSignIn}
-              disabled={isLoading}
-            />
           </div>
         </form>
       </ContentPadding>

@@ -1,0 +1,21 @@
+.imgContainer {
+  position: relative;
+  width: 200px; /* Set desired width */
+  height: 200px; /* Set desired height */
+  margin-top: 10px;
+  margin-bottom: 2rem;
+}
+
+.img {
+  object-fit: cover; /* Adjust as needed */
+  border-radius: 10px;
+}
+
+.btnContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  width: fit-content;
+  margin-bottom: 2rem;
+}

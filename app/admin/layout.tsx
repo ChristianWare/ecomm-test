@@ -16,10 +16,7 @@ const AdminLayout = ({ children }: Props) => {
           <div className={styles.left}>
             <LeftSidebar />
           </div>
-          <div className={styles.right}>
-            <h1 className={styles.heading}>Dashboard</h1>
-            <div className={styles.right}>{children}</div>
-          </div>
+          <div className={styles.right}>{children}</div>
         </div>
       </ContentPadding>
     </LayoutWrapper>

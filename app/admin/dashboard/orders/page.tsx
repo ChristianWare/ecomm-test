@@ -1,6 +1,6 @@
+import styles from "../Dashboard.module.css";
+
 const OrdersPage = () => {
-  return (
-    <div>Orders Page</div>
-  )
-}
+  return <h1 className={styles.heading}>Orders Page</h1>;
+};
 export default OrdersPage;

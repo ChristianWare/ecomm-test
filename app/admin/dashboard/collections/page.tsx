@@ -1,7 +1,15 @@
+import Button from "@/components/Button/Button";
+import styles from "../Dashboard.module.css";
+
 const CollectionsPage = () => {
   return (
     <div>
-      <h2>Collections Page</h2>
+      <h1 className={styles.heading}>Collections Page</h1>
+      <Button
+        btnType='primaryii'
+        href='/admin/dashboard/collections/new'
+        text='new'
+      />
     </div>
   );
 };

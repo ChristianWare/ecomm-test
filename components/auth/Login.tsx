@@ -138,7 +138,7 @@ const Login = () => {
                     btnType='primaryii'
                     text='Sign in with Google'
                     onClick={handleGoogleSignIn}
-                    disabled={loading}
+                    // disabled={loading}
                   />
                 </div>
 
