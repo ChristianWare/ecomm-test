@@ -39,7 +39,7 @@ export default function Modal({ isOpen, onClose, children }: Props) {
           onClick={onClose}
           style={{ marginBottom: "10px", cursor: "pointer" }}
         >
-          <Close width={30} height={30} />
+          {/* <Close width={30} height={30} /> */}
         </button>
         <div className={styles.children}>{children}</div>
       </div>

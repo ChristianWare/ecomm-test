@@ -145,14 +145,15 @@ const CollectionsPage = () => {
           setModalCollectionId(null);
         }}
       >
-        <p>
-          Are you sure you want to delete this collection? This cannot be
-          undone.
+        <h6 className={styles.modalHeading}>Are you absolutely sure?</h6>
+        <p className={styles.modalText}>
+          This action cannot be undone. This will permanently delete your
+          collection.
         </p>
         <div className={styles.btnContainer}>
           <FalseButton
-            btnType='primaryii'
-            text='Delete Collection'
+            btnType='delete'
+            text='Continue'
             onClick={() => {
               deleteCollection(modalCollectionId!);
               setIsModalOpen(false);

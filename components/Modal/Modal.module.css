@@ -6,7 +6,6 @@
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.3);
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,12 +15,9 @@
 .modalContent {
   background-color: var(--white);
   padding: 3rem;
-  border-radius: 20px;
-  max-width: 700px;
+  border-radius: 10px;
+  max-width: 600px;
   position: relative;
   transition: all 0.3s ease-in;
-}
-
-.children {
-  margin-top: 1rem;
+  display: flex;
 }
