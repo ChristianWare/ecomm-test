@@ -5,10 +5,11 @@ import styles from "./ImageUpload.module.css";
 import Trash from "../../public/icons/trash.svg";
 
 interface ImageUploadProps {
-  value: string;
-  onChange: (url: string) => void;
+  value: string; // Changed from string[] to string
+  onChange: (value: string) => void;
   onRemove: () => void;
 }
+
 const ImageUpload: React.FC<ImageUploadProps> = ({
   value,
   onChange,
@@ -23,7 +24,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     open: () => void
   ) => {
-    e.preventDefault(); // Prevent form submission
+    e.preventDefault();
     open();
   };
 
@@ -38,14 +39,20 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               layout='fill'
               className={styles.img}
             />
-            <Trash
+
+            {/* <Trash
               width={35}
               height={35}
               className={styles.icon}
               onClick={onRemove}
-            />
+            /> */}
           </div>
         )}
+        {/* <FalseButton
+          text='remove image'
+          btnType='primaryii'
+          onClick={onRemove}
+        /> */}
       </div>
       <CldUploadWidget uploadPreset='kqmegwb6' onSuccess={onSuccess}>
         {({ open }) => (

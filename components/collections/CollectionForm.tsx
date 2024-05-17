@@ -33,12 +33,13 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
     },
   });
 
-  const watchedImages = watch("image");
-
   const onSubmit = async (values: any) => {
     try {
       setLoading(true);
-      const res = await fetch("/api/collections", {
+      const url = initialData
+        ? `/api/collections/${initialData._id}`
+        : "/api/collections";
+      const res = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,7 +50,7 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
       setLoading(false);
 
       if (res.ok) {
-         toast.success("Collection Created");
+        toast.success(`Collection ${initialData ? "updated" : "created"}`);
         router.push("/admin/dashboard/collections");
       } else if (
         res.status === 400 &&
@@ -71,6 +72,8 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
       setLoading(false);
     }
   };
+
+  const imageValue = watch("image");
 
   const handleImageChange = (url: string) => {
     setValue("image", url);
@@ -142,7 +145,7 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
         <div className={styles.labelInputBox}>
           {/* <label htmlFor='image'>Image</label> */}
           <ImageUpload
-            value={getValues("image")}
+            value={imageValue}
             onChange={handleImageChange}
             onRemove={handleImageRemove}
           />

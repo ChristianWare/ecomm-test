@@ -25,6 +25,8 @@ const AccountPage = () => {
   const { user } = useAppSelector((state) => state.auth);
   const [isLoading, setIsLoading] = useState(true);
 
+  console.log(user);
+
   useEffect(() => {
     if (user !== undefined) {
       setIsLoading(false);

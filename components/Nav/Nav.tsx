@@ -20,6 +20,8 @@ function Nav() {
   const [isOpenii, setIsOpenii] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  console.log(data);
+
   const openMenu = () => {
     setIsOpen(!isOpen);
   };
