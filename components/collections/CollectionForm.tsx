@@ -33,6 +33,17 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
     },
   });
 
+  const handleKeyPress = (
+    e:
+      | React.KeyboardEvent<HTMLInputElement>
+      | React.KeyboardEvent<HTMLTextAreaElement>
+  ) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
+  };
+  
+
   const onSubmit = async (values: any) => {
     try {
       setLoading(true);
@@ -116,6 +127,7 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
                 message: "Title too long, must be at most 20 characters",
               },
             })}
+            onKeyDown={handleKeyPress}
           />
           {renderError(errors.title?.message)}
         </div>
@@ -139,6 +151,7 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
                 message: "Description must be at most 500 characters",
               },
             })}
+            onKeyDown={handleKeyPress}
           />
           {renderError(errors.description?.message)}
         </div>
