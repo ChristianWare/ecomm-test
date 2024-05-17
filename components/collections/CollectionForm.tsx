@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import styles from "./CollectionForm.module.css";
 import FalseButton from "../FalseButton/FalseButton";

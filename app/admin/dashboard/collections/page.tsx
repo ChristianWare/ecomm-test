@@ -5,7 +5,6 @@ import styles from "../Dashboard.module.css";
 import { useState, useEffect } from "react";
 import { MDBDataTable } from "mdbreact";
 import Trash from "../../../../public/icons/trash.svg";
-import Close from "../../../../public/icons/close.svg";
 import Modal from "@/components/Modal/Modal";
 import FalseButton from "@/components/FalseButton/FalseButton";
 import Link from "next/link";
@@ -118,8 +117,8 @@ const CollectionsPage = () => {
                 <Trash
                   onClick={() => handleDeleteModal(collection._id)}
                   className={styles.icon}
-                  width={25}
-                  height={25}
+                  width={30}
+                  height={30}
                 ></Trash>
               </div>
             </div>

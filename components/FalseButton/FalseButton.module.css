@@ -18,8 +18,8 @@
 
 .btn {
   font-family: var(--tuskerGrotesk);
-  text-transform: uppercase;
-  font-size: 2rem;
+  /* text-transform: uppercase; */
+  font-size: 1.8rem;
   letter-spacing: 1px;
   text-align: center;
   white-space: nowrap;
