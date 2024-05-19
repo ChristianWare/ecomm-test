@@ -1,23 +1,23 @@
-type CollectionType = {
+export interface CollectionType {
   _id: string;
   title: string;
   description: string;
   image: string;
   products: ProductType[];
-};
+}
 
-type ProductType = {
+export interface ProductType {
   _id: string;
   title: string;
   description: string;
-  media: [string];
+  media: string[];
   category: string;
-  collections: [CollectionType];
-  tags: [string];
-  sizes: [string];
-  colors: [string];
+  collections: CollectionType[];
+  tags: string[];
+  sizes: string[];
+  colors: string[];
   price: number;
   expense: number;
   createdAt: Date;
   updatedAt: Date;
-};
+}

@@ -5,15 +5,17 @@ import styles from "./ImageUpload.module.css";
 import Trash from "../../public/icons/trash.svg";
 
 interface ImageUploadProps {
-  value: string; // Changed from string[] to string
+  value: string | string[];
   onChange: (value: string) => void;
-  onRemove: () => void;
+  onRemove: (value?: string) => void;
+  multiple?: boolean; // Add a new prop to indicate if multiple images are allowed
 }
 
 const ImageUpload: React.FC<ImageUploadProps> = ({
   value,
   onChange,
   onRemove,
+  multiple = false,
 }) => {
   const onSuccess = (result: any) => {
     const newUrl = result.info.secure_url;
@@ -31,34 +33,51 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   return (
     <div>
       <div>
-        {value && (
-          <div className={styles.imgContainer}>
-            <Image
-              src={value}
-              alt='collection'
-              layout='fill'
-              className={styles.img}
-            />
-
-            {/* <Trash
-              width={35}
-              height={35}
-              className={styles.icon}
-              onClick={onRemove}
-            /> */}
-          </div>
-        )}
-        {/* <FalseButton
-          text='remove image'
-          btnType='primaryii'
-          onClick={onRemove}
-        /> */}
+        {multiple && Array.isArray(value)
+          ? value.map((url) => (
+              <div key={url} className={styles.imgContainer}>
+                <Image
+                  src={url}
+                  alt='image'
+                  layout='fill'
+                  className={styles.img}
+                />
+                <Trash
+                  width={35}
+                  height={35}
+                  className={styles.icon}
+                  onClick={() => onRemove(url)}
+                />
+              </div>
+            ))
+          : typeof value === "string" && (
+              <div className={styles.imgContainer}>
+                <Image
+                  src={value}
+                  alt='image'
+                  layout='fill'
+                  className={styles.img}
+                />
+                <Trash
+                  width={35}
+                  height={35}
+                  className={styles.icon}
+                  onClick={() => onRemove(value)}
+                />
+              </div>
+            )}
       </div>
       <CldUploadWidget uploadPreset='kqmegwb6' onSuccess={onSuccess}>
         {({ open }) => (
           <div className={styles.btnContainer}>
             <FalseButton
-              text={value ? "Change Image" : "+ Upload Image"}
+              text={
+                value
+                  ? multiple
+                    ? "Add Image"
+                    : "Change Image"
+                  : "+ Upload Image"
+              }
               btnType='primaryii'
               onClick={(e) => handleUploadClick(e, open)}
             />

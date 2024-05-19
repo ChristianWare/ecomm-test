@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import styles from "./ProductForm.module.css";
 import FalseButton from "../FalseButton/FalseButton";
@@ -8,6 +8,7 @@ import ImageUpload from "../ImageUpload/ImageUpload";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Button from "../Button/Button";
+import { ProductType, CollectionType } from "@/interfaces";
 
 interface ProductFormProps {
   initialData?: ProductType | null;
@@ -16,6 +17,41 @@ interface ProductFormProps {
 const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [collections, setCollections] = useState<CollectionType[]>([]);
+
+  const getCollections = async () => {
+    try {
+      const res = await fetch("/api/collections", {
+        method: "GET",
+      });
+      const data = await res.json();
+      setCollections(data);
+      setLoading(false);
+    } catch (err) {
+      console.log("[collections_GET]", err);
+      toast.error("Something went wrong! Please try again.");
+    }
+  };
+
+  useEffect(() => {
+    getCollections();
+  }, []);
+
+  const defaultValues: ProductType = initialData || {
+    _id: "",
+    title: "",
+    description: "",
+    media: [] as string[],
+    category: "",
+    collections: [] as CollectionType[],
+    tags: [] as string[],
+    sizes: [] as string[],
+    colors: [] as string[],
+    price: 0.1,
+    expense: 0.1,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
 
   const {
     register,
@@ -26,18 +62,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
     watch,
     formState: { errors },
   } = useForm({
-    defaultValues: initialData || {
-      title: "",
-      description: "",
-      media: [],
-      category: "",
-      collections: [],
-      tags: "",
-      sizes: [],
-      colors: [],
-      price: 0.1,
-      expense: 0.1,
-    },
+    defaultValues,
   });
 
   const handleKeyPress = (
@@ -50,7 +75,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
     }
   };
 
-  const onSubmit = async (values: any) => {
+  const onSubmit = async (values: ProductType) => {
     try {
       setLoading(true);
       const url = initialData
@@ -78,11 +103,11 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
           message: "Product with that name already exists",
         });
       } else {
-        throw new Error(data.error || "Failed to create collection");
+        throw new Error(data.error || "Failed to create product");
       }
     } catch (err) {
       console.log("[products_POST]", err);
-      setError("form", {
+      setError("root", {
         type: "manual",
         message: "Something went wrong, please try again.",
       });
@@ -90,14 +115,21 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
     }
   };
 
-  const imageValue = watch("image");
+  const imageValue = watch("media");
 
   const handleImageChange = (url: string) => {
-    setValue("image", url);
+    setValue("media", [...imageValue, url]);
   };
 
-  const handleImageRemove = () => {
-    setValue("image", "");
+  const handleImageRemove = (url?: string) => {
+    if (url) {
+      setValue(
+        "media",
+        imageValue.filter((image: string) => image !== url)
+      );
+    } else {
+      setValue("media", []);
+    }
   };
 
   const renderError = (error: any) => {
@@ -167,8 +199,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
             value={imageValue}
             onChange={handleImageChange}
             onRemove={handleImageRemove}
+            multiple={true} // Indicate that this component handles multiple images
           />
-          {renderError(errors.image?.message)}
+          {renderError(errors.media?.message)}
         </div>
         <div className={styles.priceExpenseCategoryBox}>
           <div className={styles.labelInputBox}>
@@ -181,19 +214,11 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               id='price_field'
               placeholder='Price'
               {...register("price", {
-                required: "price is required",
-                //   minLength: {
-                //     value: 2,
-                //     message: "Title must be at least 2 characters",
-                //   },
-                //     maxLength: {
-                //       value: 20,
-                //       message: "Title too long, must be at most 20 characters",
-                //     },
+                required: "Price is required",
               })}
               onKeyDown={handleKeyPress}
             />
-            {renderError(errors.title?.message)}
+            {renderError(errors.price?.message)}
           </div>
           <div className={styles.labelInputBox}>
             <label htmlFor='expense_field' className={styles.label}>
@@ -206,18 +231,10 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               placeholder='Expense'
               {...register("expense", {
                 required: "Expense is required",
-                //   minLength: {
-                //     value: 2,
-                //     message: "Title must be at least 2 characters",
-                //   },
-                //   maxLength: {
-                //     value: 20,
-                //     message: "Title too long, must be at most 20 characters",
-                //   },
               })}
               onKeyDown={handleKeyPress}
             />
-            {renderError(errors.title?.message)}
+            {renderError(errors.expense?.message)}
           </div>
           <div className={styles.labelInputBox}>
             <label htmlFor='category_field' className={styles.label}>
@@ -225,23 +242,15 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
             </label>
             <input
               className={styles.input}
-              type='number'
+              type='text'
               id='category_field'
-              placeholder='category'
-              {...register("expense", {
+              placeholder='Category'
+              {...register("category", {
                 required: "Category is required",
-                //   minLength: {
-                //     value: 2,
-                //     message: "Title must be at least 2 characters",
-                //   },
-                //   maxLength: {
-                //     value: 20,
-                //     message: "Title too long, must be at most 20 characters",
-                //   },
               })}
               onKeyDown={handleKeyPress}
             />
-            {renderError(errors.title?.message)}
+            {renderError(errors.category?.message)}
           </div>
         </div>
         <div className={styles.btnContainer}>
@@ -253,9 +262,10 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
           <Button
             btnType='primaryii'
             text='Discard'
-            href='/admin/dashboard/collections'
+            href='/admin/dashboard/products'
           />
         </div>
+        {renderError(errors.root?.message)}
       </form>
     </div>
   );
