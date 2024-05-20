@@ -3,6 +3,7 @@ import FalseButton from "../FalseButton/FalseButton";
 import Image from "next/image";
 import styles from "./ImageUpload.module.css";
 import Trash from "../../public/icons/trash.svg";
+import Person from '../../public/images/default_avatar.jpg'
 
 interface ImageUploadProps {
   value: string | string[];
@@ -37,7 +38,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           ? value.map((url) => (
               <div key={url} className={styles.imgContainer}>
                 <Image
-                  src={url}
+                  src={url || Person}
                   alt='image'
                   layout='fill'
                   className={styles.img}
@@ -53,7 +54,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           : typeof value === "string" && (
               <div className={styles.imgContainer}>
                 <Image
-                  src={value}
+                  src={
+                    typeof value === "string" && value ? value : Person
+                  }
                   alt='image'
                   layout='fill'
                   className={styles.img}

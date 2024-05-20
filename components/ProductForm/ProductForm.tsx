@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Button from "../Button/Button";
 import { ProductType, CollectionType } from "@/interfaces";
+import MultiText from "../MultiText/MultiText";
 
 interface ProductFormProps {
   initialData?: ProductType | null;
@@ -116,6 +117,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
   };
 
   const imageValue = watch("media");
+    const tagsValue = watch("tags");
+
 
   const handleImageChange = (url: string) => {
     setValue("media", [...imageValue, url]);
@@ -130,6 +133,10 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
     } else {
       setValue("media", []);
     }
+  };
+
+  const handleTagsChange = (tags: string[]) => {
+    setValue("tags", tags);
   };
 
   const renderError = (error: any) => {
@@ -252,6 +259,17 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
             />
             {renderError(errors.category?.message)}
           </div>
+        </div>
+        <div className={styles.labelInputBox}>
+          <label htmlFor='category_field' className={styles.label}>
+            Tags
+          </label>
+          <MultiText
+            placeholder='Tags'
+            value={tagsValue}
+            onChange={handleTagsChange}
+          />
+          {renderError(errors.category?.message)}
         </div>
         <div className={styles.btnContainer}>
           <FalseButton

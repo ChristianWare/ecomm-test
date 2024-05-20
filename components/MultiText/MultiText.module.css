@@ -1,0 +1,53 @@
+.labelInputBox {
+  width: 100%;
+}
+
+.input,
+.textarea {
+  border: 1px solid var(--green2);
+  padding: 1.3rem;
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  line-height: 100%;
+  margin-bottom: 1rem;
+}
+
+.tagContainer {
+  margin-bottom: 2rem;
+  padding: 0.5rem 0rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  width: fit-content;
+  background-color: gray;
+  color: var(--white);
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  padding-left: 1.5rem;
+  padding-right: 1rem;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  user-select: none;
+  line-height: 100%;
+}
+
+.tagCloseBtn {
+  color: var(--white);
+  cursor: pointer;
+}
+
+.icon {
+  color: var(--white);
+  position: relative;
+  right: -2px;
+}
+
