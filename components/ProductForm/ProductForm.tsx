@@ -201,7 +201,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
           {renderError(errors.description?.message)}
         </div>
         <div className={styles.labelInputBox}>
-          <label htmlFor='image'>Media</label>
+          <label htmlFor='image' className={styles.label}>
+            Media
+          </label>
           <ImageUpload
             value={imageValue}
             onChange={handleImageChange}
