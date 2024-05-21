@@ -2,8 +2,7 @@
   width: 100%;
 }
 
-.input,
-.textarea {
+.input {
   border: 1px solid var(--green2);
   padding: 1.3rem;
   border-radius: 10px;

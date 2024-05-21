@@ -287,6 +287,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               <p className={styles.error}>{errors.tags.message}</p>
             )}
           </div>
+        </div>
           <div className={styles.labelInputBox}>
             <label htmlFor='collections_field' className={styles.label}>
               Collections
@@ -307,7 +308,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               <p className={styles.error}>{errors.collections.message}</p>
             )}
           </div>
-        </div>
         <div className={styles.btnContainer}>
           <FalseButton
             btnType='primaryii'

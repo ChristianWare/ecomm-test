@@ -3,6 +3,7 @@
 import { useState } from "react";
 import styles from "./MultiSelect.module.css";
 import { CollectionType } from "@/interfaces";
+import Close from "../../public/icons/close.svg";
 
 interface MultiSelectProps {
   placeholder: string;
@@ -20,66 +21,59 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
   onRemove,
 }) => {
   const [inputValue, setInputValue] = useState("");
-  const [open, setOpen] = useState(false);
 
   const selectables = collections.filter(
     (collection) => !value.includes(collection)
   );
 
-  const handleSelect = (id: string) => {
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const id = e.target.value;
     const collection = collections.find((col) => col._id === id);
     if (collection) {
       onChange(collection);
     }
     setInputValue("");
-    setOpen(false);
   };
 
   const handleRemove = (collection: CollectionType) => {
     onRemove(collection);
   };
 
+
   return (
-    <div className={styles.multiSelectContainer}>
-      <div className={styles.inputContainer}>
+    <>
+      <div className={styles.labelInputBox}>
+        <select
+          className={styles.input}
+          value={inputValue}
+          onChange={handleSelect}
+          onFocus={() => setInputValue("")} // Clear input value on focus
+        >
+          <option value='' disabled>
+            {placeholder}
+          </option>
+          {selectables.map((collection) => (
+            <option key={collection._id} value={collection._id}>
+              {collection.title}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className={styles.badgeContainer}>
         {value.map((collection) => (
           <span key={collection._id} className={styles.badge}>
             {collection.title}
             <button
               type='button'
-              className={styles.removeButton}
+              className={styles.badgeCloseBtn}
               onClick={() => handleRemove(collection)}
             >
-              x
+              <Close width={25} height={25} className={styles.icon} />
             </button>
           </span>
         ))}
-        <div className={styles.labelInputBox}>
-          <input
-            className={styles.input}
-            placeholder={placeholder}
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onFocus={() => setOpen(true)}
-            onBlur={() => setOpen(false)}
-          />
-        </div>
       </div>
-      {open && (
-        <div className={styles.dropdown}>
-          {selectables.map((collection) => (
-            <div
-              key={collection._id}
-              className={styles.dropdownItem}
-              onMouseDown={(e) => e.preventDefault()}
-              onClick={() => handleSelect(collection._id)}
-            >
-              {collection.title}
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
+    </>
   );
 };
 
