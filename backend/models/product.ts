@@ -1,23 +1,25 @@
 import mongoose from "mongoose";
 
-const ProductScehma = new mongoose.Schema(
+const ProductSchema = new mongoose.Schema(
   {
-    title: String,
-    description: String,
-    media: [String],
-    category: String,
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    media: [{ type: String, required: true }],
+    category: { type: String, required: true },
     collections: [{ type: mongoose.Schema.Types.ObjectId, ref: "Collection" }],
     tags: [String],
     sizes: [String],
     colors: [String],
     price: {
       type: mongoose.Schema.Types.Decimal128,
+      required: true,
       get: (v: mongoose.Schema.Types.Decimal128) => {
         return parseFloat(v.toString());
       },
     },
     expense: {
       type: mongoose.Schema.Types.Decimal128,
+      required: true,
       get: (v: mongoose.Schema.Types.Decimal128) => {
         return parseFloat(v.toString());
       },
@@ -29,6 +31,6 @@ const ProductScehma = new mongoose.Schema(
 );
 
 const Product =
-  mongoose.models.Product || mongoose.model("Product", ProductScehma);
+  mongoose.models.Product || mongoose.model("Product", ProductSchema);
 
 export default Product;

@@ -118,21 +118,23 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
     }
   };
 
-  const imageValue = watch("media");
+  const imageValue = watch("media") as string[];
   const tagsValue = watch("tags");
   const colorsValue = watch("colors");
   const sizesValue = watch("sizes");
   const collectionsValue = watch("collections") as CollectionType[];
 
-  const handleImageChange = (url: string) => {
-    setValue("media", [...imageValue, url]);
+  console.log(imageValue)
+
+  const handleImageChange = (urls: string[]) => {
+    setValue("media", urls);
   };
 
   const handleImageRemove = (url?: string) => {
     if (url) {
       setValue(
         "media",
-        imageValue.filter((image: string) => image !== url)
+        imageValue.filter((image) => image !== url)
       );
     } else {
       setValue("media", []);
@@ -142,11 +144,11 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
   const handleTagsChange = (tags: string[]) => {
     setValue("tags", tags);
   };
-  
+
   const handleColorsChange = (colors: string[]) => {
     setValue("colors", colors);
   };
-  
+
   const handleSizesChange = (sizes: string[]) => {
     setValue("sizes", sizes);
   };
@@ -328,6 +330,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               placeholder='Colors'
               value={colorsValue}
               onChange={handleColorsChange}
+              id='colors_field'
             />
             {errors.colors && (
               <p className={styles.error}>{errors.colors.message}</p>
@@ -341,9 +344,10 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               placeholder='Sizes'
               value={sizesValue}
               onChange={handleSizesChange}
+              id='sizes_field'
             />
-            {errors.colors && (
-              <p className={styles.error}>{errors.colors.message}</p>
+            {errors.sizes && (
+              <p className={styles.error}>{errors.sizes.message}</p>
             )}
           </div>
         </div>
