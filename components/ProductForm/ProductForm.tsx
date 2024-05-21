@@ -120,6 +120,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
 
   const imageValue = watch("media");
   const tagsValue = watch("tags");
+  const colorsValue = watch("colors");
+  const sizesValue = watch("sizes");
   const collectionsValue = watch("collections") as CollectionType[];
 
   const handleImageChange = (url: string) => {
@@ -139,6 +141,14 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
 
   const handleTagsChange = (tags: string[]) => {
     setValue("tags", tags);
+  };
+  
+  const handleColorsChange = (colors: string[]) => {
+    setValue("colors", colors);
+  };
+  
+  const handleSizesChange = (sizes: string[]) => {
+    setValue("sizes", sizes);
   };
 
   const handleCollectionsChange = (collection: CollectionType) => {
@@ -288,26 +298,54 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
             )}
           </div>
         </div>
+        <div className={styles.labelInputBox}>
+          <label htmlFor='collections_field' className={styles.label}>
+            Collections
+          </label>
+          <MultiSelect
+            placeholder='Select'
+            collections={collections}
+            value={collectionsValue}
+            onChange={handleCollectionsChange}
+            onRemove={(collection) =>
+              setValue(
+                "collections",
+                collectionsValue.filter((col) => col._id !== collection._id)
+              )
+            }
+          />
+          {errors.collections && (
+            <p className={styles.error}>{errors.collections.message}</p>
+          )}
+        </div>
+        <div className={styles.priceExpenseCategoryBox}>
           <div className={styles.labelInputBox}>
-            <label htmlFor='collections_field' className={styles.label}>
-              Collections
+            <label htmlFor='colors_field' className={styles.label}>
+              Colors
             </label>
-            <MultiSelect
-              placeholder='Select'
-              collections={collections}
-              value={collectionsValue}
-              onChange={handleCollectionsChange}
-              onRemove={(collection) =>
-                setValue(
-                  "collections",
-                  collectionsValue.filter((col) => col._id !== collection._id)
-                )
-              }
+            <MultiText
+              placeholder='Colors'
+              value={colorsValue}
+              onChange={handleColorsChange}
             />
-            {errors.collections && (
-              <p className={styles.error}>{errors.collections.message}</p>
+            {errors.colors && (
+              <p className={styles.error}>{errors.colors.message}</p>
             )}
           </div>
+          <div className={styles.labelInputBox}>
+            <label htmlFor='sizes_field' className={styles.label}>
+              Sizes
+            </label>
+            <MultiText
+              placeholder='Sizes'
+              value={sizesValue}
+              onChange={handleSizesChange}
+            />
+            {errors.colors && (
+              <p className={styles.error}>{errors.colors.message}</p>
+            )}
+          </div>
+        </div>
         <div className={styles.btnContainer}>
           <FalseButton
             btnType='primaryii'
