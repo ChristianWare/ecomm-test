@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import Button from "../Button/Button";
 import { ProductType, CollectionType } from "@/interfaces";
 import MultiText from "../MultiText/MultiText";
+import MultiSelect from "../MultiSelect/MultiSelect";
 
 interface ProductFormProps {
   initialData?: ProductType | null;
@@ -22,6 +23,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
 
   const getCollections = async () => {
     try {
+      setLoading(true);
       const res = await fetch("/api/collections", {
         method: "GET",
       });
@@ -117,8 +119,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
   };
 
   const imageValue = watch("media");
-    const tagsValue = watch("tags");
-
+  const tagsValue = watch("tags");
+  const collectionsValue = watch("collections") as CollectionType[];
 
   const handleImageChange = (url: string) => {
     setValue("media", [...imageValue, url]);
@@ -139,11 +141,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
     setValue("tags", tags);
   };
 
-  const renderError = (error: any) => {
-    if (typeof error === "string") {
-      return <p className={styles.error}>{error}</p>;
-    }
-    return null;
+  const handleCollectionsChange = (collection: CollectionType) => {
+    setValue("collections", [...collectionsValue, collection]);
   };
 
   return (
@@ -174,7 +173,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
             })}
             onKeyDown={handleKeyPress}
           />
-          {renderError(errors.title?.message)}
+          {errors.title && (
+            <p className={styles.error}>{errors.title.message}</p>
+          )}
         </div>
         <div className={styles.labelInputBox}>
           <label htmlFor='description' className={styles.label}>
@@ -198,7 +199,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
             })}
             onKeyDown={handleKeyPress}
           />
-          {renderError(errors.description?.message)}
+          {errors.description && (
+            <p className={styles.error}>{errors.description.message}</p>
+          )}
         </div>
         <div className={styles.labelInputBox}>
           <label htmlFor='image' className={styles.label}>
@@ -208,9 +211,11 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
             value={imageValue}
             onChange={handleImageChange}
             onRemove={handleImageRemove}
-            multiple={true} // Indicate that this component handles multiple images
+            multiple={true}
           />
-          {renderError(errors.media?.message)}
+          {errors.media && (
+            <p className={styles.error}>{errors.media.message}</p>
+          )}
         </div>
         <div className={styles.priceExpenseCategoryBox}>
           <div className={styles.labelInputBox}>
@@ -227,7 +232,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               })}
               onKeyDown={handleKeyPress}
             />
-            {renderError(errors.price?.message)}
+            {errors.price && (
+              <p className={styles.error}>{errors.price.message}</p>
+            )}
           </div>
           <div className={styles.labelInputBox}>
             <label htmlFor='expense_field' className={styles.label}>
@@ -243,7 +250,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               })}
               onKeyDown={handleKeyPress}
             />
-            {renderError(errors.expense?.message)}
+            {errors.expense && (
+              <p className={styles.error}>{errors.expense.message}</p>
+            )}
           </div>
           <div className={styles.labelInputBox}>
             <label htmlFor='category_field' className={styles.label}>
@@ -259,25 +268,51 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               })}
               onKeyDown={handleKeyPress}
             />
-            {renderError(errors.category?.message)}
+            {errors.category && (
+              <p className={styles.error}>{errors.category.message}</p>
+            )}
           </div>
         </div>
-        <div className={styles.labelInputBox}>
-          <label htmlFor='category_field' className={styles.label}>
-            Tags
-          </label>
-          <MultiText
-            placeholder='Tags'
-            value={tagsValue}
-            onChange={handleTagsChange}
-          />
-          {renderError(errors.category?.message)}
+        <div className={styles.priceExpenseCategoryBox}>
+          <div className={styles.labelInputBox}>
+            <label htmlFor='tags_field' className={styles.label}>
+              Tags
+            </label>
+            <MultiText
+              placeholder='Tags'
+              value={tagsValue}
+              onChange={handleTagsChange}
+            />
+            {errors.tags && (
+              <p className={styles.error}>{errors.tags.message}</p>
+            )}
+          </div>
+          <div className={styles.labelInputBox}>
+            <label htmlFor='collections_field' className={styles.label}>
+              Collections
+            </label>
+            <MultiSelect
+              placeholder='Collections'
+              collections={collections}
+              value={collectionsValue}
+              onChange={handleCollectionsChange}
+              onRemove={(collection) =>
+                setValue(
+                  "collections",
+                  collectionsValue.filter((col) => col._id !== collection._id)
+                )
+              }
+            />
+            {errors.collections && (
+              <p className={styles.error}>{errors.collections.message}</p>
+            )}
+          </div>
         </div>
         <div className={styles.btnContainer}>
           <FalseButton
             btnType='primaryii'
             text={loading ? "Submitting..." : "Submit"}
-            disabled={loading} // Disable the button while submitting
+            disabled={loading}
           />
           <Button
             btnType='primaryii'
@@ -285,7 +320,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
             href='/admin/dashboard/products'
           />
         </div>
-        {renderError(errors.root?.message)}
+        {errors.root && <p className={styles.error}>{errors.root.message}</p>}
       </form>
     </div>
   );
