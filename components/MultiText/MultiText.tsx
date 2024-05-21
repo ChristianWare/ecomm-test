@@ -8,12 +8,14 @@ interface MultiTextProps {
   placeholder: string;
   value: string[];
   onChange: (value: string[]) => void;
+  id: string;
 }
 
 const MultiText: React.FC<MultiTextProps> = ({
   placeholder,
   value,
   onChange,
+  id
 }) => {
   const [inputValue, setInputValue] = useState("");
 
@@ -42,6 +44,7 @@ const MultiText: React.FC<MultiTextProps> = ({
               addTag(inputValue);
             }
           }}
+          id={id}
         />
       </div>
       <div className={styles.tagContainer}>

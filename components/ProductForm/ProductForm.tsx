@@ -292,6 +292,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               placeholder='Tags'
               value={tagsValue}
               onChange={handleTagsChange}
+              id='tags_field'
             />
             {errors.tags && (
               <p className={styles.error}>{errors.tags.message}</p>

@@ -39,7 +39,6 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
     onRemove(collection);
   };
 
-
   return (
     <>
       <div className={styles.labelInputBox}>
