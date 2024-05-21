@@ -293,7 +293,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               Collections
             </label>
             <MultiSelect
-              placeholder='Collections'
+              placeholder='Select'
               collections={collections}
               value={collectionsValue}
               onChange={handleCollectionsChange}

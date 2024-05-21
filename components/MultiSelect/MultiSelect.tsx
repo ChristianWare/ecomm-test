@@ -29,7 +29,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const id = e.target.value;
     const collection = collections.find((col) => col._id === id);
-    if (collection) {
+    if (collection && !value.some((val) => val._id === id)) {
       onChange(collection);
     }
     setInputValue("");
