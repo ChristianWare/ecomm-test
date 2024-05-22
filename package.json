@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.0.1",
+    "@stripe/stripe-js": "^3.4.1",
     "@svgr/webpack": "^8.1.0",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.41.0",
@@ -30,7 +31,8 @@
     "react-hot-toast": "^2.4.1",
     "react-redux": "^9.0.2",
     "react-star-ratings": "^2.3.0",
-    "stripe": "^14.7.0"
+    "stripe": "^14.7.0",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/node": "^20",
