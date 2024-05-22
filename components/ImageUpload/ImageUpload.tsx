@@ -1,3 +1,4 @@
+import { useState, useRef } from "react";
 import { CldUploadWidget } from "next-cloudinary";
 import FalseButton from "../FalseButton/FalseButton";
 import Image from "next/image";
@@ -8,8 +9,8 @@ import Person from "../../public/images/default_avatar.jpg";
 interface ImageUploadProps {
   value: string[];
   onChange: (value: string[]) => void;
-  onRemove: (value: string) => void; 
-  multiple?: boolean; 
+  onRemove: (value: string) => void;
+  multiple?: boolean;
 }
 
 const ImageUpload: React.FC<ImageUploadProps> = ({
@@ -18,6 +19,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   onRemove,
   multiple = false,
 }) => {
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+  const dragImageRef = useRef<HTMLDivElement>(null);
+
   const onUpload = (result: any) => {
     const newUrl = result.info.secure_url;
     if (multiple) {
@@ -35,12 +39,52 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     open();
   };
 
+  const handleDragStart = (
+    e: React.DragEvent<HTMLDivElement>,
+    index: number
+  ) => {
+    setDraggedIndex(index);
+
+    // Set a custom drag image or disable it
+    if (dragImageRef.current) {
+      e.dataTransfer.setDragImage(dragImageRef.current, 0, 0);
+    }
+
+    // Add the dragging class to the body
+    document.body.classList.add(styles.dragging);
+  };
+
+  const handleDragOver = (index: number) => {
+    if (draggedIndex === null) return;
+    if (index === draggedIndex) return;
+
+    const newValue = [...value];
+    const [draggedItem] = newValue.splice(draggedIndex, 1);
+    newValue.splice(index, 0, draggedItem);
+
+    setDraggedIndex(index);
+    onChange(newValue);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedIndex(null);
+    // Remove the dragging class from the body
+    document.body.classList.remove(styles.dragging);
+  };
+
   return (
     <div>
       <div className={styles.imageBox}>
         {multiple &&
-          value.map((url) => (
-            <div key={url} className={styles.imgContainer}>
+          value.map((url, index) => (
+            <div
+              key={url}
+              className={styles.imgContainer}
+              draggable
+              onDragStart={(e) => handleDragStart(e, index)}
+              onDragOver={() => handleDragOver(index)}
+              onDragEnd={handleDragEnd}
+            >
               <Image
                 src={url || Person}
                 alt='image'
@@ -90,6 +134,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           </div>
         )}
       </CldUploadWidget>
+      {/* Hidden div used to set a custom drag image */}
+      <div ref={dragImageRef} style={{ display: "none" }} />
     </div>
   );
 };
