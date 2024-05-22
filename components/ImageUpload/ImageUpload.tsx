@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { CldUploadWidget } from "next-cloudinary";
 import FalseButton from "../FalseButton/FalseButton";
 import Image from "next/image";
@@ -20,7 +20,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   multiple = false,
 }) => {
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
-  const dragImageRef = useRef<HTMLDivElement>(null);
 
   const onUpload = (result: any) => {
     const newUrl = result.info.secure_url;
@@ -44,14 +43,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     index: number
   ) => {
     setDraggedIndex(index);
-
-    // Set a custom drag image or disable it
-    if (dragImageRef.current) {
-      e.dataTransfer.setDragImage(dragImageRef.current, 0, 0);
-    }
-
-    // Add the dragging class to the body
-    document.body.classList.add(styles.dragging);
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/html", "");
   };
 
   const handleDragOver = (index: number) => {
@@ -68,8 +61,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
   const handleDragEnd = () => {
     setDraggedIndex(null);
-    // Remove the dragging class from the body
-    document.body.classList.remove(styles.dragging);
   };
 
   return (
@@ -134,8 +125,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           </div>
         )}
       </CldUploadWidget>
-      {/* Hidden div used to set a custom drag image */}
-      <div ref={dragImageRef} style={{ display: "none" }} />
     </div>
   );
 };

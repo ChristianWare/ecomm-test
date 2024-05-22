@@ -42,7 +42,6 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
       e.preventDefault();
     }
   };
-  
 
   const onSubmit = async (values: any) => {
     try {
@@ -84,13 +83,13 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
     }
   };
 
-  const imageValue = watch("image");
+  const imageValue = watch("image") as string;
 
-  const handleImageChange = (url: string) => {
-    setValue("image", url);
+  const handleImageChange = (urls: string[]) => {
+    setValue("image", urls[0]);
   };
 
-  const handleImageRemove = () => {
+  const handleImageRemove = (url: string) => {
     setValue("image", "");
   };
 
@@ -156,9 +155,8 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
           {renderError(errors.description?.message)}
         </div>
         <div className={styles.labelInputBox}>
-          {/* <label htmlFor='image'>Image</label> */}
           <ImageUpload
-            value={imageValue}
+            value={imageValue ? [imageValue] : []}
             onChange={handleImageChange}
             onRemove={handleImageRemove}
           />
@@ -168,7 +166,7 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
           <FalseButton
             btnType='primaryii'
             text={loading ? "Submitting..." : "Submit"}
-            disabled={loading} // Disable the button while submitting
+            disabled={loading}
           />
           <Button
             btnType='primaryii'

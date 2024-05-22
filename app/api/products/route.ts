@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 import { dbConnect } from "@/backend/config/dbConnect";
 import Product from "@/backend/models/product";
+import { Collection } from "mongoose";
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -32,19 +33,6 @@ export const POST = async (req: NextRequest) => {
       });
     }
 
-    console.log("Request payload:", {
-      title,
-      description,
-      media,
-      category,
-      collections,
-      tags,
-      sizes,
-      colors,
-      price,
-      expense,
-    });
-
     const newProduct = await Product.create({
       title,
       description,
@@ -63,6 +51,21 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json(newProduct, { status: 200 });
   } catch (err) {
     console.log("[products_POST]", err);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+};
+
+export const GET = async (req: NextRequest) => {
+  try {
+    await dbConnect();
+
+    const products = await Product.find()
+      .sort({ createdAt: "desc" })
+      .populate("collections"); // Use the string name of the field to populate
+
+    return NextResponse.json(products, { status: 200 });
+  } catch (err) {
+    console.log("[products_GET]", err);
     return new NextResponse("Internal Error", { status: 500 });
   }
 };
