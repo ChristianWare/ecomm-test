@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 import { dbConnect } from "@/backend/config/dbConnect";
 import Collection from "@/backend/models/collection";
+import Product from "@/backend/models/product";
 
 export const GET = async (
   req: NextRequest,
@@ -81,6 +82,11 @@ export const DELETE = async (
     await dbConnect();
 
     await Collection.findByIdAndDelete(params.collectionId);
+
+    await Product.updateMany(
+      { collections: params.collectionId },
+      { $pull: { collections: params.collectionId } }
+    );
     return new NextResponse("Collection is deleted", { status: 200 });
   } catch (err) {
     console.log("[collectionId_DELETE]", err);

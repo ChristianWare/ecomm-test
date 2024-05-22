@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 import { dbConnect } from "@/backend/config/dbConnect";
 import Product from "@/backend/models/product";
-import { Collection } from "mongoose";
+import Collection from "@/backend/models/collection";
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -47,6 +47,16 @@ export const POST = async (req: NextRequest) => {
     });
 
     await newProduct.save();
+
+    if (collections) {
+      for (const collectionId of collections) {
+        const collection = await Collection.findById(collectionId);
+        if (collection) {
+          collection.products.push(newProduct._id);
+          await collection.save();
+        }
+      }
+    }
 
     return NextResponse.json(newProduct, { status: 200 });
   } catch (err) {
