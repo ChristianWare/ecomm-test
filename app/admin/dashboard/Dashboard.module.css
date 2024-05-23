@@ -5,7 +5,7 @@
   margin-bottom: 2rem;
 }
 
-.dataTable {
+/* .dataTable {
   margin-top: 5rem;
   border: 2px solid var(--green2);
   border-radius: 20px;
@@ -42,7 +42,6 @@
   display: block;
   padding: 2rem;
   cursor: pointer;
-  /* margin-top: 3rem; */
   white-space: nowrap;
 }
 
@@ -92,6 +91,79 @@
   font-weight: 400;
   font-size: 2rem;
   margin-bottom: 3rem;
+}
+
+.trash {
+  border: 2px solid red;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.2s all ease-in;
+}
+
+.trash:hover {
+  background-color: red;
+}
+
+.trash:hover .icon {
+  color: var(--white);
+}
+
+.icon {
+  color: red;
+  transition: 0.2s all ease-in;
+} */
+
+.box {
+  width: 100%;
+  /* padding: 1rem; */
+}
+
+.headingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--green2);
+  padding: 1rem;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+.headingContainer div {
+  text-align: center;
+  width: 100%;
+}
+
+.tableContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.tableContainer p {
+  border: 1px solid var(--green2);
+  padding: 1rem;
+}
+
+.products {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.actions {
+  border: 1px solid var(--green2);
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
 }
 
 .trash {

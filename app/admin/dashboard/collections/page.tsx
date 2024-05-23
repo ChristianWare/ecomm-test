@@ -171,10 +171,42 @@ const CollectionsPage = () => {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <MDBDataTable
+        <>
+          {/* <MDBDataTable
           data={setCollectionsTable()}
           className={styles.dataTable}
-        />
+        /> */}
+            <div className={styles.headingContainer}>
+              <div>Title</div>
+              <div>Products</div>
+              <div>Actions</div>
+            </div>
+          <div className={styles.box}>
+            {collections.map((x, index) => (
+              <div key={index} className={styles.tableContainerr}>
+                <div className={styles.tableContainer}>
+                  <p>{x.title}</p>
+                  <p className={styles.products}>{x.products.length}</p>
+                  <div className={styles.actions}>
+                    <Link
+                      href={`/admin/dashboard/collections/${x._id}`}
+                    >
+                      edit
+                    </Link>
+                    <div className={styles.trash}>
+                      <Trash
+                        onClick={() => handleDeleteModal(x._id)}
+                        className={styles.icon}
+                        width={30}
+                        height={30}
+                      ></Trash>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
