@@ -10,6 +10,7 @@ import { setIsAuthenticated, setUser } from "../../redux/features/userSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { signOut, useSession } from "next-auth/react";
 import Down from "../../public/icons/down.svg";
+import Cart from "../../public/icons/cart.svg";
 
 function Nav() {
   const dispatch = useAppDispatch();
@@ -19,8 +20,6 @@ function Nav() {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenii, setIsOpenii] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  console.log(data);
 
   const openMenu = () => {
     setIsOpen(!isOpen);
@@ -184,6 +183,10 @@ function Nav() {
             </>
           ))}
         </ul>
+        <Link href='/cart'>
+          <Cart width={30} height={30} />
+          Cart(0)
+        </Link>
         {!user ? (
           <div className={styles.btnContainer}>
             <Button href='/login' text='Login' btnType='navBtn' />
