@@ -3,7 +3,6 @@
 import Button from "@/components/Button/Button";
 import styles from "../Dashboard.module.css";
 import { useState, useEffect } from "react";
-import { MDBDataTable } from "mdbreact";
 import Trash from "../../../../public/icons/trash.svg";
 import Modal from "@/components/Modal/Modal";
 import FalseButton from "@/components/FalseButton/FalseButton";
@@ -76,62 +75,14 @@ const CollectionsPage = () => {
     setIsModalOpen(true);
   };
 
-  const setCollectionsTable = () => {
-    const data: { columns: any[]; rows: any[] } = {
-      columns: [
-        {
-          label: <div className={styles.theadContainer}>Title</div>,
-          field: "title",
-          sort: "asc",
-        },
-        {
-          label: <div className={styles.theadContainer}>Produtcs</div>,
-          field: "products",
-          sort: "asc",
-        },
-        {
-          label: <div className={styles.theadContainer}>Actions</div>,
-          field: "actions",
-          sort: "asc",
-        },
-      ],
-      rows: [],
-    };
-
-    collections
-      ?.sort(
-        (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      )
-      .forEach((collection) => {
-        data?.rows?.push({
-          id: collection._id,
-          title: collection.title,
-          products: collection.products.length,
-          actions: (
-            <div className={styles.actions}>
-              <Link href={`/admin/dashboard/collections/${collection._id}`}>
-                edit
-              </Link>
-              <div className={styles.trash}>
-                <Trash
-                  onClick={() => handleDeleteModal(collection._id)}
-                  className={styles.icon}
-                  width={30}
-                  height={30}
-                ></Trash>
-              </div>
-            </div>
-          ),
-        });
-      });
-
-    return data;
-  };
-
   return (
     <div>
       <h1 className={styles.heading}>Collections Page</h1>
+      <p className={styles.copy}>
+        Collections are a group of products that fall under a certain category,
+        like new arrivals, or trending, or best sellers, etc. These collections
+        will appear on the home page.{" "}
+      </p>
       <Button
         btnType='primaryii'
         href='/admin/dashboard/collections/new'
@@ -172,15 +123,11 @@ const CollectionsPage = () => {
         <p>Loading...</p>
       ) : (
         <>
-          {/* <MDBDataTable
-          data={setCollectionsTable()}
-          className={styles.dataTable}
-        /> */}
-            <div className={styles.headingContainer}>
-              <div>Title</div>
-              <div>Products</div>
-              <div>Actions</div>
-            </div>
+          <div className={styles.headingContainer}>
+            <div>Title</div>
+            <div>Products</div>
+            <div>Actions</div>
+          </div>
           <div className={styles.box}>
             {collections.map((x, index) => (
               <div key={index} className={styles.tableContainerr}>
@@ -188,9 +135,7 @@ const CollectionsPage = () => {
                   <p>{x.title}</p>
                   <p className={styles.products}>{x.products.length}</p>
                   <div className={styles.actions}>
-                    <Link
-                      href={`/admin/dashboard/collections/${x._id}`}
-                    >
+                    <Link href={`/admin/dashboard/collections/${x._id}`}>
                       edit
                     </Link>
                     <div className={styles.trash}>

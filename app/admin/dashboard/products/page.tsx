@@ -10,11 +10,10 @@ import FalseButton from "@/components/FalseButton/FalseButton";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import Trash from "../../../../public/icons/trash.svg";
-import { MDBDataTable } from "mdbreact";
 
 const ProductsPage = () => {
   const [loading, setLoading] = useState(true);
-  const [products, setProducts] = useState<ProductType[] | null>([]);
+  const [products, setProducts] = useState<ProductType[]>([]);
   const [modalProductId, setModalProductId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -58,88 +57,14 @@ const ProductsPage = () => {
     setIsModalOpen(true);
   };
 
-  const setProductsTable = () => {
-    const data: { columns: any[]; rows: any[] } = {
-      columns: [
-        {
-          label: <div className={styles.theadContainer}>Title</div>,
-          field: "title",
-          sort: "asc",
-        },
-        {
-          label: <div className={styles.theadContainer}>Category</div>,
-          field: "category",
-          sort: "asc",
-        },
-        // {
-        //   label: <div className={styles.theadContainer}>Collections</div>,
-        //   field: "collections",
-        //   sort: "asc",
-        // },
-        {
-          label: <div className={styles.theadContainer}>Price</div>,
-          field: "price",
-          sort: "asc",
-        },
-        {
-          label: <div className={styles.theadContainer}>Expense</div>,
-          field: "expense",
-          sort: "asc",
-        },
-        {
-          label: <div className={styles.theadContainer}>Profit</div>,
-          field: "profit",
-          sort: "asc",
-        },
-        {
-          label: <div className={styles.theadContainer}>Actions</div>,
-          field: "actions",
-          sort: "asc",
-        },
-      ],
-      rows: [],
-    };
-
-    products
-      ?.sort(
-        (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      )
-      .forEach((product) => {
-        data?.rows?.push({
-          id: product._id,
-          title: product.title,
-          category: product.category,
-          // collections: product.collections
-          //   .map((collection) => collection.title)
-          //   .join(", "),
-          price: `$${product.price}`,
-          expense: `$${product.expense}`,
-          profit: `$${product.price - product.expense}`,
-          actions: (
-            <div className={styles.actions}>
-              <Link href={`/admin/dashboard/products/${product._id}`}>
-                edit
-              </Link>
-              <div className={styles.trash}>
-                <Trash
-                  onClick={() => handleDeleteModal(product._id)}
-                  className={styles.icon}
-                  width={30}
-                  height={30}
-                ></Trash>
-              </div>
-            </div>
-          ),
-        });
-      });
-
-    return data;
-  };
-
   return (
     <div>
       <h1 className={styles.heading}>Products Page</h1>
+      <p className={styles.copy}>
+        Products are a group of items that you sell, and they can belong to
+        categories, collections and tags. Yuo can create, edit, and delete all
+        of your products here.
+      </p>
       <Button
         btnType='primaryii'
         href='/admin/dashboard/products/new'
@@ -179,7 +104,39 @@ const ProductsPage = () => {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <MDBDataTable data={setProductsTable()} className={styles.dataTable} />
+        <div>
+          <div className={styles.headingContainer}>
+            <div>Title</div>
+            <div>Category</div>
+            <div>Price</div>
+
+            <div>Actions</div>
+          </div>
+          <div className={styles.box}>
+            {products.map((product, index) => (
+              <div key={index} className={styles.tableContainerr}>
+                <div className={styles.productTableContainer}>
+                  <p>{product.title}</p>
+                  <p>{product.category}</p>
+                  <p>${product.price}</p>
+                  <div className={styles.actions}>
+                    <Link href={`/admin/dashboard/products/${product._id}`}>
+                      edit
+                    </Link>
+                    <div className={styles.trash}>
+                      <Trash
+                        onClick={() => handleDeleteModal(product._id)}
+                        className={styles.icon}
+                        width={30}
+                        height={30}
+                      ></Trash>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       )}
     </div>
   );

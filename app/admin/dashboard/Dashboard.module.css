@@ -5,122 +5,13 @@
   margin-bottom: 2rem;
 }
 
-/* .dataTable {
-  margin-top: 5rem;
-  border: 2px solid var(--green2);
-  border-radius: 20px;
-  padding: 3rem;
-  width: 100%;
-  overflow: scroll;
+.copy {
+  margin: 3rem 0rem;
+  width: 60%;
 }
-
-.dataTable table {
-  width: 100%;
-}
-
-.dataTable label {
-  font-weight: 500;
-  text-transform: capitalize;
-}
-
-.dataTable select {
-  padding: 0.3rem;
-}
-
-.dataTable input {
-  border-radius: 5px;
-  padding-left: 5px;
-  padding: 0.5rem;
-  border: 2px solid var(--purple);
-  margin-bottom: 3rem;
-}
-
-.theadContainer {
-  background-color: var(--green2);
-  padding: 1rem;
-  width: 100%;
-  display: block;
-  padding: 2rem;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.dataTable td {
-  padding: 1rem;
-  border: 1px solid var(--green2);
-}
-
-.actions {
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem;
-}
-
-.dataTable div ul {
-  margin-top: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 2rem;
-  list-style: none;
-  font-weight: 700;
-  display: none;
-}
-
-.dataTable div li {
-  cursor: pointer;
-}
-
-.btnContainer {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 2rem;
-}
-
-.modalHeading {
-  margin-bottom: 1rem;
-  color: red;
-  font-size: 2rem;
-  text-transform: none;
-}
-
-.modalText {
-  font-weight: 400;
-  font-size: 2rem;
-  margin-bottom: 3rem;
-}
-
-.trash {
-  border: 2px solid red;
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: 0.2s all ease-in;
-}
-
-.trash:hover {
-  background-color: red;
-}
-
-.trash:hover .icon {
-  color: var(--white);
-}
-
-.icon {
-  color: red;
-  transition: 0.2s all ease-in;
-} */
 
 .box {
   width: 100%;
-  /* padding: 1rem; */
 }
 
 .headingContainer {
@@ -138,7 +29,8 @@
   width: 100%;
 }
 
-.tableContainer {
+.tableContainer,
+.productTableContainer {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 1rem;
@@ -146,7 +38,11 @@
   margin-bottom: 1rem;
 }
 
-.tableContainer p {
+.productTableContainer {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.tableContainer p, .productTableContainer p {
   border: 1px solid var(--green2);
   padding: 1rem;
 }
