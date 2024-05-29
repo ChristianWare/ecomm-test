@@ -1,0 +1,20 @@
+.productContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
+}
+
+.heading {
+  margin-bottom: 3rem;
+}
+
+.imgContainer {
+  position: relative;
+  width: 100%;
+  height: 450px;
+  display: block;
+}
+
+.img {
+  object-fit: cover;
+}

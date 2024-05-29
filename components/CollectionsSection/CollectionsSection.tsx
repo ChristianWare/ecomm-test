@@ -11,25 +11,29 @@ const CollectionsSection = async () => {
   return (
     <LayoutWrapper>
       <ContentPadding>
-        <h2 className={styles.heading}>Collections</h2>
-        <div className={styles.collectionContainer}>
-          {collections.map((collection: CollectionType) => (
-            <div key={collection._id}>
-              <Link
-                href={`/collections/${collection._id}`}
-                className={styles.imgContainer}
-              >
-                <Image
-                  src={collection.image}
-                  alt={collection.title}
-                  fill
-                  className={styles.img}
-                />
-              </Link>
-              <div className={styles.title}>{collection.title}</div>
+        {collections.length >= 1 && (
+          <>
+            <h2 className={styles.heading}>Collections</h2>
+            <div className={styles.collectionContainer}>
+              {collections.map((collection: CollectionType) => (
+                <div key={collection._id}>
+                  <Link
+                    href={`/collections/${collection._id}`}
+                    className={styles.imgContainer}
+                  >
+                    <Image
+                      src={collection.image}
+                      alt={collection.title}
+                      fill
+                      className={styles.img}
+                    />
+                  </Link>
+                  <div className={styles.title}>{collection.title}</div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </>
+        )}
       </ContentPadding>
     </LayoutWrapper>
   );
