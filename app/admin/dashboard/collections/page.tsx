@@ -77,7 +77,7 @@ const CollectionsPage = () => {
 
   return (
     <div>
-      <h1 className={styles.heading}>Collections Page</h1>
+      <h1 className={styles.heading}>Collections</h1>
       <p className={styles.copy}>
         Collections are a group of products that fall under a certain category,
         like new arrivals, or trending, or best sellers, etc. These collections
