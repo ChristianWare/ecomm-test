@@ -8,7 +8,7 @@ import ImageUpload from "../ImageUpload/ImageUpload";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Button from "../Button/Button";
-import { ProductType, CollectionType } from "@/interfaces";
+import { ProductType, CollectionType, CategoryType } from "@/interfaces";
 import MultiText from "../MultiText/MultiText";
 import MultiSelect from "../MultiSelect/MultiSelect";
 
@@ -20,24 +20,33 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [collections, setCollections] = useState<CollectionType[]>([]);
+  const [categories, setCategories] = useState<CategoryType[]>([]);
 
   const getCollections = async () => {
     try {
-      setLoading(true);
-      const res = await fetch("/api/collections", {
-        method: "GET",
-      });
+      const res = await fetch("/api/collections");
       const data = await res.json();
       setCollections(data);
-      setLoading(false);
     } catch (err) {
       console.log("[collections_GET]", err);
       toast.error("Something went wrong! Please try again.");
     }
   };
 
+  const getCategories = async () => {
+    try {
+      const res = await fetch("/api/categories");
+      const data = await res.json();
+      setCategories(data);
+    } catch (err) {
+      console.log("[categories_GET]", err);
+      toast.error("Something went wrong! Please try again.");
+    }
+  };
+
   useEffect(() => {
     getCollections();
+    getCategories();
   }, []);
 
   const defaultValues: ProductType = initialData || {
@@ -45,7 +54,13 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
     title: "",
     description: "",
     media: [] as string[],
-    category: "",
+    category: {
+      _id: "",
+      title: "",
+      description: "",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
     collections: [] as CollectionType[],
     tags: [] as string[],
     sizes: [] as string[],
@@ -68,6 +83,12 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
     defaultValues,
   });
 
+  useEffect(() => {
+    if (initialData && initialData.category && initialData.category._id) {
+      setValue("category._id", initialData.category._id);
+    }
+  }, [initialData, setValue]);
+
   const handleKeyPress = (
     e:
       | React.KeyboardEvent<HTMLInputElement>
@@ -85,7 +106,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
         ? `/api/products/${initialData._id}`
         : "/api/products";
       const res = await fetch(url, {
-        method: "POST",
+        method: initialData ? "PUT" : "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -123,8 +144,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
   const colorsValue = watch("colors");
   const sizesValue = watch("sizes");
   const collectionsValue = watch("collections") as CollectionType[];
-
-  console.log(imageValue)
 
   const handleImageChange = (urls: string[]) => {
     setValue("media", urls);
@@ -216,7 +235,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
           )}
         </div>
         <div className={styles.labelInputBox}>
-          <label htmlFor='image' className={styles.label}>
+          <label htmlFor='media' className={styles.label}>
             Media
           </label>
           <ImageUpload
@@ -270,18 +289,22 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
             <label htmlFor='category_field' className={styles.label}>
               Category
             </label>
-            <input
+            <select
               className={styles.input}
-              type='text'
               id='category_field'
-              placeholder='Category'
-              {...register("category", {
+              {...register("category._id", {
                 required: "Category is required",
               })}
-              onKeyDown={handleKeyPress}
-            />
-            {errors.category && (
-              <p className={styles.error}>{errors.category.message}</p>
+            >
+              <option value=''>Select Category</option>
+              {categories.map((category) => (
+                <option key={category._id} value={category._id}>
+                  {category.title}
+                </option>
+              ))}
+            </select>
+            {errors.category?._id && (
+              <p className={styles.error}>{errors.category._id.message}</p>
             )}
           </div>
         </div>

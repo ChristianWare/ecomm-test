@@ -30,7 +30,8 @@
 }
 
 .tableContainer,
-.productTableContainer {
+.productTableContainer,
+.categoryTableContainer {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 1rem;
@@ -42,7 +43,14 @@
   grid-template-columns: repeat(4, 1fr);
 }
 
-.tableContainer p, .productTableContainer p {
+.categoryTableContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.tableContainer p,
+.productTableContainer p,
+.categoryTableContainer p {
   border: 1px solid var(--green2);
   padding: 1rem;
 }

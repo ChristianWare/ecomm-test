@@ -3,6 +3,7 @@ import { getToken } from "next-auth/jwt";
 import { dbConnect } from "@/backend/config/dbConnect";
 import Product from "@/backend/models/product";
 import Collection from "@/backend/models/collection";
+import Category from "@/backend/models/category";
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -69,13 +70,15 @@ export const GET = async (req: NextRequest) => {
   try {
     await dbConnect();
 
-    const products = await Product.find()
-      .sort({ createdAt: "desc" })
-      .populate("collections"); // Use the string name of the field to populate
+    const products = await Product.find().populate({
+      path: "category",
+      model: Category,
+      select: "title",
+    });
 
     return NextResponse.json(products, { status: 200 });
   } catch (err) {
     console.log("[products_GET]", err);
-    return new NextResponse("Internal Error", { status: 500 });
+    return new NextResponse("Internal Server Error", { status: 500 });
   }
 };

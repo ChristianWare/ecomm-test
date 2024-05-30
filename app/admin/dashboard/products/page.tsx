@@ -35,6 +35,7 @@ const ProductsPage = () => {
   useEffect(() => {
     getProducts();
   }, []);
+
   const deleteProduct = async (id: string) => {
     try {
       const res = await fetch(`/api/products/${id}`, {
@@ -62,7 +63,7 @@ const ProductsPage = () => {
       <h1 className={styles.heading}>Products Page</h1>
       <p className={styles.copy}>
         Products are a group of items that you sell, and they can belong to
-        categories, collections and tags. Yuo can create, edit, and delete all
+        categories, collections and tags. You can create, edit, and delete all
         of your products here.
       </p>
       <Button
@@ -109,7 +110,6 @@ const ProductsPage = () => {
             <div>Title</div>
             <div>Category</div>
             <div>Price</div>
-
             <div>Actions</div>
           </div>
           <div className={styles.box}>
@@ -117,7 +117,12 @@ const ProductsPage = () => {
               <div key={index} className={styles.tableContainerr}>
                 <div className={styles.productTableContainer}>
                   <p>{product.title}</p>
-                  <p>{product.category}</p>
+                  <p>
+                    {typeof product.category === "string"
+                      ? product.category
+                      : product.category?.title}
+                  </p>{" "}
+                  {/* Ensure category title is rendered */}
                   <p>${product.price}</p>
                   <div className={styles.actions}>
                     <Link href={`/admin/dashboard/products/${product._id}`}>

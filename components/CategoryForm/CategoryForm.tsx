@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import styles from "./CategoryForm.module.css";
 import FalseButton from "../FalseButton/FalseButton";
@@ -22,6 +21,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ initialData }) => {
     setValue,
     setError,
     watch,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: initialData || {
@@ -29,6 +29,13 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ initialData }) => {
       description: "",
     },
   });
+
+  // Update the form with initial data when it changes
+  useEffect(() => {
+    if (initialData) {
+      reset(initialData);
+    }
+  }, [initialData, reset]);
 
   const handleKeyPress = (
     e:
@@ -141,7 +148,6 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ initialData }) => {
           />
           {renderError(errors.description?.message)}
         </div>
-       
         <div className={styles.btnContainer}>
           <FalseButton
             btnType='primaryii'

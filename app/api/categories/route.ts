@@ -60,3 +60,39 @@ export const GET = async (req: NextRequest) => {
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 };
+
+export const DELETE = async (req: NextRequest) => {
+  try {
+    // Connect to the database
+    await dbConnect();
+
+    // Get the token from the request
+    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+
+    // Check if the user is authenticated
+    if (!token) {
+      return new NextResponse("Unauthorized", { status: 403 });
+    }
+
+    const { id } = await req.json();
+
+    // Validate required fields
+    if (!id) {
+      return new NextResponse("Category ID is required", { status: 400 });
+    }
+
+    // Check if the category exists
+    const category = await Category.findById(id);
+    if (!category) {
+      return new NextResponse("Category not found", { status: 404 });
+    }
+
+    // Delete the category
+    await Category.findByIdAndDelete(id);
+
+    return new NextResponse("Category deleted", { status: 200 });
+  } catch (err) {
+    console.log("[categories_DELETE]", err);
+    return new NextResponse("Internal Server Error", { status: 500 });
+  }
+};
